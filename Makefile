@@ -12,6 +12,3 @@ start-backend:
 
 start:
 	make start-backend & make start-frontend
-
-install:
-	make -C frontend install
