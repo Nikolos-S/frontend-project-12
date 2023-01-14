@@ -15,7 +15,7 @@ import { ToastContainer } from 'react-toastify';
  className="w-100 wb-3" variant="outline-primary" type="submit">Войти</Button>
 */
 
-const LoginForm = () => {
+const LoginPage = () => {
   const { setLoggedIn } = useAuth();
   const [authFailed, setAuthFailed] = useState(false);
   // const location = useLocation();
@@ -63,7 +63,7 @@ const LoginForm = () => {
               <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
                 <h1 className="text-center mb-4">Войти</h1>
                 <fieldset disabled={formik.isSubmitting}>
-                  <Form.Group className="form-floating mb-3">
+                  <Form.Group className="mb-3">
                     <Form.Control
                       onChange={formik.handleChange}
                       value={formik.values.username}
@@ -76,7 +76,7 @@ const LoginForm = () => {
                       ref={inputRef}
                     />
                   </Form.Group>
-                  <Form.Group className="form-floating mb-3">
+                  <Form.Group className="mb-3">
                     <Form.Control
                       type="password"
                       onChange={formik.handleChange}
@@ -109,7 +109,7 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default LoginPage;
 
 /*
 const schema = yup.object().shape({

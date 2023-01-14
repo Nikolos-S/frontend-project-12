@@ -7,8 +7,8 @@ import {
 } from 'react-router-dom';
 import Header from './pages/Nav.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
-import LoginForm from './pages/LoginForm.jsx';
-import Messenger from './pages/Messenger.jsx';
+import LoginPage from './pages/LoginPage.jsx';
+import PrivatePage from './pages/PrivatePage.jsx';
 import AuthContext from './context/index.js';
 import useAuth from './hooks/index.jsx';
 
@@ -34,12 +34,12 @@ const App = () => (
     <Header />
     <div className="container p-3">
       <Routes>
-        <Route path="/login" element={<LoginForm />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route
           path="/"
           element={(
             <PrivateRoute>
-              <Messenger />
+              <PrivatePage />
             </PrivateRoute>
           )}
         />
