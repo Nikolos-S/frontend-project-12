@@ -19,8 +19,8 @@ const PrivatePAge = () => {
       setData(data);
     };
     response();
-    console.log(responseData);
-  });
+    console.log(responseData.data);
+  }, []);
 
   return (
     <div>Messenger</div>
