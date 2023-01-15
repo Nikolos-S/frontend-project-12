@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import axios from 'axios';
 import {
   createSlice,
@@ -29,9 +30,9 @@ const channelsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchChannels.fulfilled, (state, { payload }) => {
-        const { channels } = payload;
-        // eslint-disable-next-line no-param-reassign
+        const { channels, currentChannelId } = payload;
         state.channels = channels;
+        state.currentChannelId = currentChannelId;
       });
   },
 });
