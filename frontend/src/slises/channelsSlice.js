@@ -19,7 +19,7 @@ export const fetchChannels = createAsyncThunk(
   'channels/fetchChannels',
   async () => {
     const response = await axios.get('/api/v1/data', { headers: getAuthHeader() });
-    return response.data;
+    return response;
   },
 );
 
