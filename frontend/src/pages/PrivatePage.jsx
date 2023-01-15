@@ -1,30 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { selectors } from '../slises/channelsSlice';
 
-const getAuthHeader = () => {
-  const userId = JSON.parse(localStorage.getItem('userId'));
-
-  if (userId && userId.token) {
-    return { Authorization: `Bearer ${userId.token}` };
-  }
-
-  return {};
-};
 const PrivatePAge = () => {
-  const [responseData, setData] = useState(null);
-  const auth = getAuthHeader();
-  useEffect(() => {
-    const response = async () => {
-      const data = await axios.get('/api/v1/data', { headers: auth });
-      setData(data);
-    };
-    response();
-    console.log(responseData.data);
-  }, []);
-
-  return (
-    <div>Messenger</div>
-  );
+  const channels = useSelector(selectors.selectAll);
+  console.log(channels);
+  return <div>Messenger</div>;
 };
 
 export default PrivatePAge;

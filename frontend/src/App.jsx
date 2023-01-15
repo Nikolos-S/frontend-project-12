@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import {
+  BrowserRouter,
   Routes,
   Route,
   Navigate,
@@ -31,21 +32,23 @@ const PrivateRoute = ({ children }) => {
 
 const App = () => (
   <AuthProvider>
-    <Header />
-    <div className="container p-3">
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route
-          path="/"
-          element={(
-            <PrivateRoute>
-              <PrivatePage />
-            </PrivateRoute>
+    <BrowserRouter>
+      <Header />
+      <div className="container p-3">
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route
+            path="/"
+            element={(
+              <PrivateRoute>
+                <PrivatePage />
+              </PrivateRoute>
           )}
-        />
-        <Route path="*" element={<ErrorPage />} />
-      </Routes>
-    </div>
+          />
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   </AuthProvider>
 );
 
