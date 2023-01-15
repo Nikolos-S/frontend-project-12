@@ -33,7 +33,6 @@ const LoginPage = () => {
         localStorage.setItem('userId', JSON.stringify(response.data));
         setLoggedIn(response);
         navigate('/');
-        console.log(response);
       } catch (err) {
         formik.setSubmitting(false);
         if (err.isAxiosError && err.response.status === 401) {
