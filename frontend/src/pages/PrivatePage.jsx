@@ -4,7 +4,7 @@ import { selectors, fetchChannels } from '../slises/channelsSlice';
 
 const PrivatePAge = () => {
   const dispatch = useDispatch();
-  const channels = useSelector(selectors);
+  const channels = useSelector(selectors.selectAll);
   useEffect(() => {
     dispatch(fetchChannels());
   }, [dispatch]);
