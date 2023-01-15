@@ -1,7 +1,6 @@
 import axios from 'axios';
 import {
   createSlice,
-  createEntityAdapter,
   createAsyncThunk,
 } from '@reduxjs/toolkit';
 
@@ -19,29 +18,24 @@ export const fetchChannels = createAsyncThunk(
   'channels/fetchChannels',
   async () => {
     const response = await axios.get('/api/v1/data', { headers: getAuthHeader() });
-    console.log(response);
-    return response;
+    return response.data;
   },
 );
 
-const channelsAdapter = createEntityAdapter();
-const initialState = channelsAdapter.getInitialState();
 const channelsSlice = createSlice({
   name: 'channels',
-  initialState,
-  reducers: {
-    addchannel: channelsAdapter.addOne,
-    addchannels: channelsAdapter.addMany,
-    removechannel: channelsAdapter.removeOne,
-  },
+  initialState: { channels: [] },
+  // reducers: {addchannel, addchannels, removechannel},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchChannels.fulfilled, (state, action) => {
-        channelsAdapter.addMany(state, action);
+      .addCase(fetchChannels.fulfilled, (state, { payload }) => {
+        const { channels } = payload;
+        // eslint-disable-next-line no-param-reassign
+        state.channels = channels;
       });
   },
 });
 
 export const { actions } = channelsSlice;
-export const selectors = channelsAdapter.getSelectors((state) => state.channels);
+export const selectors = ((state) => state.channels);
 export default channelsSlice.reducer;
