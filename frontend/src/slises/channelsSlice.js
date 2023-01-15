@@ -16,31 +16,31 @@ const getAuthHeader = () => {
 };
 
 export const fetchChannels = createAsyncThunk(
-  'fetchChannels',
+  'channels/fetchChannels',
   async () => {
     const response = await axios.get('/api/v1/data', { headers: getAuthHeader() });
     return response.data;
   },
 );
 
-const tasksAdapter = createEntityAdapter();
-const initialState = tasksAdapter.getInitialState();
+const channelsAdapter = createEntityAdapter();
+const initialState = channelsAdapter.getInitialState();
 const channelsSlice = createSlice({
   name: 'channels',
   initialState,
   reducers: {
-    addchannel: tasksAdapter.addOne,
-    addchannels: tasksAdapter.addMany,
-    removechannel: tasksAdapter.removeOne,
+    addchannel: channelsAdapter.addOne,
+    addchannels: channelsAdapter.addMany,
+    removechannel: channelsAdapter.removeOne,
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchChannels.fulfilled, (state, action) => {
-        tasksAdapter.addMany(state, action);
+        channelsAdapter.addMany(state, action);
       });
   },
 });
 
 export const { actions } = channelsSlice;
-export const selectors = tasksAdapter.getSelectors((state) => state.tasks);
+export const selectors = channelsAdapter.getSelectors((state) => state.channels);
 export default channelsSlice.reducer;

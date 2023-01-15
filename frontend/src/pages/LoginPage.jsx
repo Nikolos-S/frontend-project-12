@@ -6,19 +6,14 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 // import * as yup from 'yup';
 import useAuth from '../hooks';
-
 /*
 Для вывода ошибок:
 import { ToastContainer } from 'react-toastify';
 <ToastContainer />
- <Button disabled={!isValid && !dirty}
- className="w-100 wb-3" variant="outline-primary" type="submit">Войти</Button>
 */
-
 const LoginPage = () => {
   const { setLoggedIn } = useAuth();
   const [authFailed, setAuthFailed] = useState(false);
-  // const location = useLocation();
   const navigate = useNavigate();
   const inputRef = useRef();
 
