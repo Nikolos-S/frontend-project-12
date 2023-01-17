@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from 'react';
+/* eslint-disable react/jsx-no-constructed-context-values */
+import React, { useState } from 'react';
 import {
   BrowserRouter,
   Routes,
@@ -16,9 +17,13 @@ import useAuth from './hooks/index.jsx';
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(null);
 
-  const value = useMemo(() => ({ loggedIn, setLoggedIn }), [loggedIn]);
+  const logIn = () => setLoggedIn(true);
+  const logOut = () => {
+    localStorage.clear();
+    setLoggedIn(false);
+  };
   return (
-    <AuthContext.Provider value={value}>
+    <AuthContext.Provider value={{ loggedIn, logIn, logOut }}>
       {children}
     </AuthContext.Provider>
   );
@@ -33,8 +38,8 @@ const PrivateRoute = ({ children }) => {
 const App = () => (
   <AuthProvider>
     <BrowserRouter>
-      <Header />
-      <div className="container p-3">
+      <div className="d-flex flex-column h-100">
+        <Header />
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route

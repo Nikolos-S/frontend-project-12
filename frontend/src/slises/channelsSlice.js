@@ -1,27 +1,8 @@
 /* eslint-disable no-param-reassign */
-import axios from 'axios';
-import {
-  createSlice,
-  createAsyncThunk,
-} from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import fetchData from './fetchData';
 
-const getAuthHeader = () => {
-  const userId = JSON.parse(localStorage.getItem('userId'));
-
-  if (userId && userId.token) {
-    return { Authorization: `Bearer ${userId.token}` };
-  }
-
-  return {};
-};
-
-export const fetchChannels = createAsyncThunk(
-  'channels/fetchChannels',
-  async () => {
-    const response = await axios.get('/api/v1/data', { headers: getAuthHeader() });
-    return response.data;
-  },
-);
+export const fetchChannels = fetchData('channels/fetchChannels');
 
 const channelsSlice = createSlice({
   name: 'channels',
@@ -37,6 +18,6 @@ const channelsSlice = createSlice({
   },
 });
 
-export const { actions } = channelsSlice;
-export const selectors = ((state) => state.channels);
+// export const { actions } = channelsSlice;
+export const channelsSelector = ((state) => state.channels);
 export default channelsSlice.reducer;

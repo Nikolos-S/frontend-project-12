@@ -12,7 +12,7 @@ import { ToastContainer } from 'react-toastify';
 <ToastContainer />
 */
 const LoginPage = () => {
-  const { setLoggedIn } = useAuth();
+  const { logIn } = useAuth();
   const [authFailed, setAuthFailed] = useState(false);
   const navigate = useNavigate();
   const inputRef = useRef();
@@ -31,14 +31,13 @@ const LoginPage = () => {
       try {
         const response = await axios.post('/api/v1/login', values);
         localStorage.setItem('userId', JSON.stringify(response.data));
-        setLoggedIn(response);
+        logIn();
         navigate('/');
       } catch (err) {
         formik.setSubmitting(false);
         if (err.isAxiosError && err.response.status === 401) {
           setAuthFailed(true);
           inputRef.current.select();
-          console.log(err.message);
           return;
         }
         throw err;
