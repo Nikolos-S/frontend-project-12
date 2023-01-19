@@ -5,8 +5,12 @@ import {
   Routes,
   Route,
   Navigate,
-  // useLocation,
 } from 'react-router-dom';
+import { io } from 'socket.io-client';
+// import store from './slises/index.js';
+import { useDispatch } from 'react-redux';
+import { addMessage } from './slises/messagesSlice.js';
+import { addChannel } from './slises/channelsSlice.js';
 import Header from './pages/Nav.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
@@ -15,24 +19,51 @@ import AuthContext from './context/index.js';
 import useAuth from './hooks/index.jsx';
 
 const AuthProvider = ({ children }) => {
-  const [loggedIn, setLoggedIn] = useState(null);
-
-  const logIn = () => setLoggedIn(true);
+  const [loggedId, setLoggedId] = useState(null);
+  const logIn = () => setLoggedId(true);
   const logOut = () => {
     localStorage.clear();
-    setLoggedIn(false);
+    setLoggedId(false);
   };
+
+  const dispatch = useDispatch();
+  const socket = io();
+  socket.on('newMessage', (payload) => {
+    dispatch(addMessage(payload));
+  });
+
+  socket.on('newChannel', (payload) => {
+    dispatch(addChannel(payload));
+  });
+
+  const handleSubmitMessage = (payload) => {
+    socket.emit('newMessage', payload);
+  };
+
+  const handleSubmitChannell = (payload) => {
+    socket.emit('newChannel', payload);
+  };
+
   return (
-    <AuthContext.Provider value={{ loggedIn, logIn, logOut }}>
+    <AuthContext.Provider
+      value={{
+        loggedId,
+        logIn,
+        logOut,
+        handleSubmitMessage,
+        handleSubmitChannell,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
 
 const PrivateRoute = ({ children }) => {
-  // const location = useLocation();
-  const { loggedIn } = useAuth();
-  return loggedIn ? children : <Navigate to="/login" />; // state={{ from: location }} - при необходимости задавать динамический путь после входа
+  const { loggedId } = useAuth();
+  return loggedId ? children : <Navigate to="/login" />;
+// state={{ from: location }} - при необходимости задавать динамический путь после входа
+// const location = useLocation();
 };
 
 const App = () => (
@@ -48,7 +79,7 @@ const App = () => (
               <PrivateRoute>
                 <PrivatePage />
               </PrivateRoute>
-          )}
+            )}
           />
           <Route path="*" element={<ErrorPage />} />
         </Routes>

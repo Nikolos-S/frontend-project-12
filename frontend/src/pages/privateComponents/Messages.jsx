@@ -6,12 +6,11 @@ import Message from './Message.jsx';
 import InputForm from './InputForm.jsx';
 
 const Messages = () => {
-  const { messages } = useSelector(messagesSelectors);
+  const messages = useSelector(messagesSelectors);
   const { channels, currentChannelId } = useSelector(channelsSelector);
 
   const curentMessages = messages
     .filter((message) => message.channelId === currentChannelId);
-
   const curentChannel = channels.find((channel) => channel.id === currentChannelId);
 
   return (
@@ -27,7 +26,7 @@ const Messages = () => {
           ))}
         </div>
         <div className="mt-auto px-5 py-3">
-          <InputForm />
+          <InputForm prop={currentChannelId} />
         </div>
       </div>
     </div>

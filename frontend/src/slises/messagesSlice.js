@@ -6,17 +6,20 @@ export const fetchMessages = fetchData('channels/fetchMessages');
 
 const messagesSlice = createSlice({
   name: 'messages',
-  initialState: { messages: [] },
-  // reducers: {addmessage, addmessages, removemessage},
+  initialState: [],
+  reducers: {
+    addMessage(state, { payload }) {
+      state.push(payload);
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchMessages.fulfilled, (state, { payload }) => {
-        const { messages } = payload;
-        state.messages = messages;
+        state.push(payload);
       });
   },
 });
 
-// export const { actions } = messagesSlice;
+export const { addMessage } = messagesSlice.actions;
 export const messagesSelectors = ((state) => state.messages);
 export default messagesSlice.reducer;
