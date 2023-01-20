@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Button from 'react-bootstrap/esm/Button';
-import useAuth from '../hooks';
+import { useAuth } from '../hooks';
 
 const Header = () => {
   const { loggedId, logOut } = useAuth();

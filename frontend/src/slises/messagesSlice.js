@@ -1,8 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
-import fetchData from './fetchData';
-
-export const fetchMessages = fetchData('channels/fetchMessages');
+import fetchData from './fetchData.js';
 
 const messagesSlice = createSlice({
   name: 'messages',
@@ -14,12 +12,13 @@ const messagesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchMessages.fulfilled, (state, { payload }) => {
-        state.push(payload);
+      .addCase(fetchData.fulfilled, (state, { payload }) => {
+        const { messages } = payload;
+        state.push(...messages);
       });
   },
 });
 
 export const { addMessage } = messagesSlice.actions;
-export const messagesSelectors = ((state) => state.messages);
+export const messagesSelector = ((state) => state.messages);
 export default messagesSlice.reducer;

@@ -1,8 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
-import fetchData from './fetchData';
-
-export const fetchChannels = fetchData('channels/fetchChannels');
+import fetchData from './fetchData.js';
 
 const channelsSlice = createSlice({
   name: 'channels',
@@ -17,7 +15,7 @@ const channelsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchChannels.fulfilled, (state, { payload }) => {
+      .addCase(fetchData.fulfilled, (state, { payload }) => {
         const { channels, currentChannelId } = payload;
         state.channels = channels;
         state.currentChannelId = currentChannelId;

@@ -11,15 +11,12 @@ const getAuthHeader = () => {
   return {};
 };
 
-const fetchData = (request) => {
-  const data = createAsyncThunk(
-    `${request}`,
-    async () => {
-      const response = await axios.get('/api/v1/data', { headers: getAuthHeader() });
-      return response.data;
-    },
-  );
-  return data;
-};
+const fetchData = createAsyncThunk(
+  'fetchData',
+  async () => {
+    const response = await axios.get('/api/v1/data', { headers: getAuthHeader() });
+    return response.data;
+  },
+);
 
 export default fetchData;

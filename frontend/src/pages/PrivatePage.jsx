@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { channelsSelector, fetchChannels } from '../slises/channelsSlice.js';
-import { fetchMessages } from '../slises/messagesSlice.js';
+import { channelsSelector } from '../slises/channelsSlice.js';
 import Channel from './privateComponents/Channel.jsx';
 import Messages from './privateComponents/Messages.jsx';
+import fetchData from '../slises/fetchData.js';
 
 const PrivatePAge = () => {
   const dispatch = useDispatch();
@@ -11,8 +11,7 @@ const PrivatePAge = () => {
   const currentId = { current: currentChannelId };
 
   useEffect(() => {
-    dispatch(fetchChannels());
-    dispatch(fetchMessages());
+    dispatch(fetchData());
   }, [dispatch]);
 
   return (

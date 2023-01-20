@@ -6,17 +6,12 @@ import {
   Route,
   Navigate,
 } from 'react-router-dom';
-import { io } from 'socket.io-client';
-// import store from './slises/index.js';
-import { useDispatch } from 'react-redux';
-import { addMessage } from './slises/messagesSlice.js';
-import { addChannel } from './slises/channelsSlice.js';
 import Header from './pages/Nav.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import PrivatePage from './pages/PrivatePage.jsx';
-import AuthContext from './context/index.js';
-import useAuth from './hooks/index.jsx';
+import { AuthContext } from './context/index.js';
+import { useAuth } from './hooks/index.jsx';
 
 const AuthProvider = ({ children }) => {
   const [loggedId, setLoggedId] = useState(null);
@@ -26,32 +21,12 @@ const AuthProvider = ({ children }) => {
     setLoggedId(false);
   };
 
-  const dispatch = useDispatch();
-  const socket = io();
-  socket.on('newMessage', (payload) => {
-    dispatch(addMessage(payload));
-  });
-
-  socket.on('newChannel', (payload) => {
-    dispatch(addChannel(payload));
-  });
-
-  const handleSubmitMessage = (payload) => {
-    socket.emit('newMessage', payload);
-  };
-
-  const handleSubmitChannell = (payload) => {
-    socket.emit('newChannel', payload);
-  };
-
   return (
     <AuthContext.Provider
       value={{
         loggedId,
         logIn,
         logOut,
-        handleSubmitMessage,
-        handleSubmitChannell,
       }}
     >
       {children}

@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import useAuth from '../../hooks/index.jsx';
+import { useSocket } from '../../hooks/index.jsx';
 
 const InputForm = ({ prop }) => {
-  const { handleSubmitMessage } = useAuth();
+  const { handleSubmitMessage } = useSocket();
   const [value, setValue] = useState('');
   const handleChange = (e) => setValue(e.target.value);
 

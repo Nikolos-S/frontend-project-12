@@ -4,18 +4,19 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useNavigate, Link } from 'react-router-dom';
 import { useFormik } from 'formik';
-// import * as yup from 'yup';
-import useAuth from '../hooks';
-/*
-Для вывода ошибок:
-import { ToastContainer } from 'react-toastify';
-<ToastContainer />
-*/
+import * as yup from 'yup';
+import { useAuth } from '../hooks';
+
 const LoginPage = () => {
   const { logIn } = useAuth();
   const [authFailed, setAuthFailed] = useState(false);
   const navigate = useNavigate();
   const inputRef = useRef();
+
+  const schema = yup.object().shape({
+    username: yup.string().typeError('Должно быть строкой').required('Обязательно'),
+    password: yup.string().typeError('Должно быть строкой').required('Обязательно'),
+  });
 
   useEffect(() => {
     inputRef.current.focus();
@@ -26,6 +27,7 @@ const LoginPage = () => {
       username: '',
       password: '',
     },
+    validationSchema: schema,
     onSubmit: async (values) => {
       setAuthFailed(false);
       try {
@@ -103,10 +105,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-
-/*
-const schema = yup.object().shape({
-    username: yup.string().typeError('Должно быть строкой').required('Обязательно'),
-    password: yup.string().typeError('Должно быть строкой').required('Обязательно'),
-  });
-*/
