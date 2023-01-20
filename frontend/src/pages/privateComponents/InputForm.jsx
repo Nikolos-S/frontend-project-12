@@ -7,10 +7,19 @@ import { useSocket } from '../../hooks/index.jsx';
 const InputForm = ({ prop }) => {
   const { handleSubmitMessage } = useSocket();
   const [value, setValue] = useState('');
-  const handleChange = (e) => setValue(e.target.value);
+  const [readyStatus, setReadyStatus] = useState(false);
+
+  const handleChange = (e) => {
+    setValue(e.target.value);
+    setReadyStatus(true);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!value) {
+      return;
+    }
+    setReadyStatus(false);
     const currentName = JSON.parse(localStorage.getItem('userId')).username;
     const newMessage = { body: value, channelId: prop, username: currentName };
     handleSubmitMessage(newMessage);
@@ -28,7 +37,7 @@ const InputForm = ({ prop }) => {
             onChange={handleChange}
             value={value}
           />
-          <Button type="submit" variant="outline-primary">
+          <Button type="submit" disabled={!readyStatus} variant="outline-primary">
             Отправить
           </Button>
         </InputGroup>

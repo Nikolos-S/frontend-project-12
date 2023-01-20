@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { messagesSelector } from '../../slises/messagesSlice';
 import { channelsSelector } from '../../slises/channelsSlice';
@@ -13,6 +13,25 @@ const Messages = () => {
     .filter((message) => message.channelId === currentChannelId);
   const curentChannel = channels.find((channel) => channel.id === currentChannelId);
 
+  const [isAutoScroll, setIsAutoScroll] = useState(true);
+
+  const scrollHandler = (e) => {
+    const element = e.target;
+    if (Math.abs(element.scrollHeight - element.offsetHeight - element.scrollTop) > 50) {
+      setIsAutoScroll(false);
+    } else {
+      setIsAutoScroll(true);
+    }
+  };
+
+  useEffect(() => {
+    if (isAutoScroll) {
+      const chatWindow = document.getElementById('messages-box');
+      const xH = chatWindow.scrollHeight;
+      chatWindow.scrollTo(0, xH);
+    }
+  }, [messages, isAutoScroll]);
+
   return (
     <div className="col p-0 h-100">
       <div className="d-flex flex-column h-100">
@@ -20,7 +39,7 @@ const Messages = () => {
           <p className="m-0"><b>{`# ${curentChannel && curentChannel.name}`}</b></p>
           <span className="text-muted">{`${curentMessages.length} сообщений`}</span>
         </div>
-        <div id="messages-box" className="chat-messages overflow-auto px-5">
+        <div id="messages-box" className="chat-messages overflow-auto px-5" onScroll={scrollHandler}>
           {curentMessages && curentMessages.map(({ id, body, username }) => (
             <Message key={id} props={{ body, username }} />
           ))}

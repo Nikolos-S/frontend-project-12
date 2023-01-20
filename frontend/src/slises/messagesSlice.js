@@ -12,10 +12,7 @@ const messagesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchData.fulfilled, (state, { payload }) => {
-        const { messages } = payload;
-        state.push(...messages);
-      });
+      .addCase(fetchData.fulfilled, (state, { payload }) => payload.messages);
   },
 });
 
