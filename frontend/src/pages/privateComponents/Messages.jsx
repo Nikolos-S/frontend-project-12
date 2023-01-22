@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { messagesSelector } from '../../slises/messagesSlice';
-import { channelsSelector } from '../../slises/channelsSlice';
+import { messagesSelector } from '../../slices/messagesSlice';
+import { channelsSelector } from '../../slices/channelsSlice';
 import Message from './Message.jsx';
 import InputForm from './InputForm.jsx';
 
 const Messages = () => {
-  const messages = useSelector(messagesSelector);
+  const { messages } = useSelector(messagesSelector);
   const { channels, currentChannelId } = useSelector(channelsSelector);
 
   const curentMessages = messages

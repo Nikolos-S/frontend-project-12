@@ -2,14 +2,20 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { useDispatch } from 'react-redux';
+import { setChannel } from '../../slices/channelsSlice.js';
 
-const Channel = ({ prop }) => {
-  const { channel, currentId } = prop; // removable
-  const activeElement = channel.id === currentId.current ? 'secondary' : 'light';
+const Channel = (props) => {
+  const dispatch = useDispatch();
+  const { channel, curentId, showModal } = props; // removable
+  const handleSetChennel = () => {
+    dispatch(setChannel({ id: channel.id }));
+  };
+  const activeElement = channel.id === curentId ? 'secondary' : 'light';
   return (
     <li className="nav-item w-100">
       <Dropdown as={ButtonGroup} className="w-100">
-        <Button variant={activeElement} className="w-100 rounded-0 text-start btn">
+        <Button onClick={handleSetChennel} variant={activeElement} className="w-100 rounded-0 text-start btn">
           <span className="me-1">#</span>
           {channel.name}
         </Button>
@@ -18,8 +24,8 @@ const Channel = ({ prop }) => {
           <Dropdown.Toggle split variant={activeElement} id={channel.id} />
         )}
         <Dropdown.Menu>
-          <Dropdown.Item href="#/action-1">Удалить</Dropdown.Item>
-          <Dropdown.Item href="#/action-2">Переименовать</Dropdown.Item>
+          <Dropdown.Item onClick={() => showModal('removing', channel.id)} id={channel.id}>Удалить</Dropdown.Item>
+          <Dropdown.Item onClick={() => showModal('renaming', channel.id)} id={channel.id}>Переименовать</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     </li>
