@@ -22,7 +22,7 @@ const messagesSlice = createSlice({
     builder
       .addCase(removeChannel, (state, { payload }) => {
         const newList = state.messages.filter((message) => message.channelId !== payload.id);
-        return newList;
+        state.messages = newList;
       });
   },
 });
