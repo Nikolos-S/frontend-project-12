@@ -22,8 +22,8 @@ const Add = (props) => {
     name: yup.string()
       .min(3, 'От 3 до 20 символов')
       .max(20, 'От 3 до 20 символов')
-      .required('поле обязательно')
-      .notOneOf([getChannels], 'должно быть уникальным'),
+      .required('Поле обязательно')
+      .notOneOf([getChannels], 'Должно быть уникальным'),
   });
 
   const formik = useFormik({

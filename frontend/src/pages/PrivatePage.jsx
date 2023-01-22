@@ -19,8 +19,6 @@ const PrivatePAge = () => {
   const dispatch = useDispatch();
   const { channels, currentChannelId } = useSelector(channelsSelector);
 
-  console.log(channels);
-
   useEffect(() => {
     dispatch(fetchData());
   }, [dispatch]);

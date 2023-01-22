@@ -10,6 +10,7 @@ import Header from './pages/Nav.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import PrivatePage from './pages/PrivatePage.jsx';
+import SignupPage from './pages/SignupPage.jsx';
 import { AuthContext } from './context/index.js';
 import { useAuth } from './hooks/index.jsx';
 
@@ -56,6 +57,7 @@ const App = () => (
               </PrivateRoute>
             )}
           />
+          <Route path="/signup" element={<SignupPage />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>

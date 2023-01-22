@@ -8,7 +8,6 @@ import InputForm from './InputForm.jsx';
 const Messages = () => {
   const { messages } = useSelector(messagesSelector);
   const { channels, currentChannelId } = useSelector(channelsSelector);
-  console.log(messages);
 
   const curentMessages = messages
     .filter((message) => message.channelId === currentChannelId);
