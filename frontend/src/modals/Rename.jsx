@@ -6,12 +6,14 @@ import {
   FormControl,
   Alert,
 } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
 import { channelsSelector, setChannel } from '../slices/channelsSlice.js';
 import { useSocket } from '../hooks/index.jsx';
 
 const Rename = (props) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { channels, currentChannelId } = useSelector(channelsSelector);
   const { modalInfo, onHide } = props;
@@ -47,7 +49,7 @@ const Rename = (props) => {
   return (
     <Modal show centered>
       <Modal.Header closeButton onHide={onHide}>
-        <Modal.Title>Переименовать канал</Modal.Title>
+        <Modal.Title>{t('modals.renameChannel')}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
@@ -59,15 +61,15 @@ const Rename = (props) => {
               onChange={formik.handleChange}
               value={formik.values.name}
               data-testid="input-body"
-              placeholder="имя канала..."
+              placeholder={t('modals.placeholder')}
               name="name"
               id="name"
             />
           </FormGroup>
           <Alert show={!!formik.errors.name} variant="danger">{formik.errors.name}</Alert>
           <div className="d-flex justify-content-end mt-2">
-            <button type="button" onClick={onHide} className="me-2 btn btn-secondary">Отменить</button>
-            <button type="submit" className="btn btn-primary">Переименовать</button>
+            <button type="button" onClick={onHide} className="me-2 btn btn-secondary">{t('modals.cancel')}</button>
+            <button type="submit" className="btn btn-primary">{t('modals.rename')}</button>
           </div>
         </form>
       </Modal.Body>

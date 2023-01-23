@@ -4,19 +4,20 @@ import { Button, Form, Alert } from 'react-bootstrap';
 import { useNavigate, Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../hooks';
 
 const SignupPage = () => {
-  console.log('>>>>>> SignPage');
+  const { t } = useTranslation();
   const { logIn } = useAuth();
   const [authFailed, setAuthFailed] = useState(false);
   const navigate = useNavigate();
   const inputRef = useRef();
 
   const schema = yup.object().shape({
-    username: yup.string().min(3, 'От 3 до 20 символов').max(20, 'От 3 до 20 символов').required('поле обязательно'),
-    password: yup.string().min(3, 'От 3 до 20 символов').max(20, 'От 3 до 20 символов').required('поле обязательно'),
-    repeatPass: yup.string().required('поле обязательно').oneOf([yup.ref('password')], 'Пароли должны совпадать'),
+    username: yup.string().min(3, t('err.limit')).max(20, t('err.limit')).required(t('err.required')),
+    password: yup.string().min(3, t('err.limit')).max(20, t('err.limit')).required(t('err.required')),
+    repeatPass: yup.string().required(t('err.required')).oneOf([yup.ref('password')], t('err.oneOf')),
   });
 
   useEffect(() => {
@@ -48,7 +49,6 @@ const SignupPage = () => {
       }
     },
   });
-  console.log(formik.touched.repeatPass);
   return (
     <div className="container-fluid h-100">
       <div className="row justify-content-center align-content-center h-100">
@@ -59,13 +59,13 @@ const SignupPage = () => {
                 <img src="./signupPage.jpg" className="rounded-circle" alt="Войти" />
               </div>
               <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
-                <h1 className="text-center mb-4">Регистрация</h1>
+                <h1 className="text-center mb-4">{t('form.registration')}</h1>
                 <fieldset disabled={formik.isSubmitting}>
                   <Form.Group className="mb-3">
                     <Form.Control
                       onChange={formik.handleChange}
                       value={formik.values.username}
-                      placeholder="ваше имя"
+                      placeholder={t('form.name')}
                       name="username"
                       id="username"
                       autoComplete="off"
@@ -80,7 +80,7 @@ const SignupPage = () => {
                       type="password"
                       onChange={formik.handleChange}
                       value={formik.values.password}
-                      placeholder="password"
+                      placeholder={t('form.pass')}
                       name="password"
                       id="password"
                       autoComplete="off"
@@ -93,7 +93,7 @@ const SignupPage = () => {
                     <Form.Control
                       onChange={formik.handleChange}
                       value={formik.values.repeatPass}
-                      placeholder="повторите пароль"
+                      placeholder={t('form.repeatPass')}
                       name="repeatPass"
                       id="repeatPass"
                       autoComplete="off"
@@ -101,17 +101,17 @@ const SignupPage = () => {
                       required
                     />
                     <Alert show={!!formik.errors.repeatPass} variant="danger">{formik.errors.repeatPass}</Alert>
-                    <Form.Control.Feedback type="invalid">Такой логин с паролем уже существуют, попробуйте снова</Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid">{t('err.alreadyExists')}</Form.Control.Feedback>
                   </Form.Group>
-                  <Button type="submit" className="w-100 wb-3" variant="outline-primary">Зарегистрироваться</Button>
+                  <Button type="submit" className="w-100 wb-3" variant="outline-primary">{t('form.register')}</Button>
                 </fieldset>
               </Form>
             </div>
             <div className="card-footer p-4">
               <div className="text-center">
                 <span>
-                  Есть акаунт?
-                  <Link to="/login">Войти</Link>
+                  {t('form.noAcc')}
+                  <Link to="/login">{t('form.enter')}</Link>
                 </span>
               </div>
             </div>

@@ -1,22 +1,25 @@
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Form, Alert } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { useNavigate, Link } from 'react-router-dom';
 import { useFormik } from 'formik';
-import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
+// import * as yup from 'yup';
 import { useAuth } from '../hooks';
 
 const LoginPage = () => {
+  const { t } = useTranslation();
   const { logIn } = useAuth();
   const [authFailed, setAuthFailed] = useState(false);
   const navigate = useNavigate();
   const inputRef = useRef();
-
+  /*
   const schema = yup.object().shape({
-    username: yup.string().typeError('Должно быть строкой').required('Обязательное поле'),
-    password: yup.string().typeError('Должно быть строкой').required('Обязательное поле'),
+    username: yup.string().typeError(t('err.str')).required(t('err.required')),
+    password: yup.string().typeError(t('err.str')).required(t('err.required')),
   });
-
+  <Alert show={!!formik.errors.username} variant="danger">{formik.errors.username}</Alert>
+*/
   useEffect(() => {
     inputRef.current.focus();
   }, []);
@@ -26,7 +29,7 @@ const LoginPage = () => {
       username: '',
       password: '',
     },
-    validationSchema: schema,
+    // validationSchema: schema,
     onSubmit: async (values) => {
       setAuthFailed(false);
       try {
@@ -56,13 +59,13 @@ const LoginPage = () => {
                 <img src="./loginForm.jpg" className="rounded-circle" alt="Войти" />
               </div>
               <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
-                <h1 className="text-center mb-4">Войти</h1>
+                <h1 className="text-center mb-4">{t('form.enter')}</h1>
                 <fieldset disabled={formik.isSubmitting}>
                   <Form.Group className="mb-3">
                     <Form.Control
                       onChange={formik.handleChange}
                       value={formik.values.username}
-                      placeholder="ваше имя"
+                      placeholder={t('form.name')}
                       name="username"
                       id="username"
                       autoComplete="username"
@@ -70,32 +73,30 @@ const LoginPage = () => {
                       required
                       ref={inputRef}
                     />
-                    <Alert show={!!formik.errors.username} variant="danger">{formik.errors.username}</Alert>
                   </Form.Group>
                   <Form.Group className="mb-3">
                     <Form.Control
                       type="password"
                       onChange={formik.handleChange}
                       value={formik.values.password}
-                      placeholder="password"
+                      placeholder={t('form.pass')}
                       name="password"
                       id="password"
                       autoComplete="current-password"
                       isInvalid={authFailed}
                       required
                     />
-                    <Alert show={!!formik.errors.password} variant="danger">{formik.errors.password}</Alert>
-                    <Form.Control.Feedback type="invalid">the username or password is incorrect</Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid">{t('err.invalid')}</Form.Control.Feedback>
                   </Form.Group>
-                  <Button type="submit" className="w-100 wb-3" variant="outline-primary">Войти</Button>
+                  <Button type="submit" className="w-100 wb-3" variant="outline-primary">{t('form.enter')}</Button>
                 </fieldset>
               </Form>
             </div>
             <div className="card-footer p-4">
               <div className="text-center">
                 <span>
-                  Нет акаунта?
-                  <Link to="/signup">Регистрация</Link>
+                  {t('form.haveAcc')}
+                  <Link to="/signup">{t('form.registration')}</Link>
                 </span>
               </div>
             </div>

@@ -1,0 +1,55 @@
+export default {
+  translation: {
+    nav: {
+      lng: 'Язык',
+      logout: 'Выход',
+    },
+    form: {
+      enter: 'Войти',
+      register: 'Зарегистрироваться',
+      haveAcc: 'Нет Аккауна? ',
+      noAcc: 'Есть аккаунт? ',
+      registration: 'Регистрация',
+      name: 'Ваше имя',
+      pass: 'Ваш пароль',
+      repeatPass: 'Повторите пароль',
+    },
+    chat: {
+      channels: 'Каналы',
+      enterAmessage: 'Введите сообщение',
+      send: 'Отправить',
+      quantityMessage: {
+        key_zero: 'сообщений',
+        key_one: 'сообщение',
+        key_two: 'сообщения',
+        key_few: 'сообщения',
+        key_many: 'сообщений',
+      },
+    },
+    modals: {
+      add: 'Добавить',
+      remove: 'Удалить',
+      rename: 'Переименовать',
+      addChannel: 'Добавить канал',
+      cancel: 'Отменить',
+      placeholder: 'имя канала...',
+      deleteChannel: 'Удалить канал',
+      sure: 'Уверены?',
+      renameChannel: 'Переименовать канал',
+    },
+    err: {
+      invalid: 'Имя пользователя или пароль неверны',
+      alreadyExists: 'Такой логин с паролем уже существуют, попробуйте снова',
+      str: 'Должно быть строкой',
+      required: 'Обязательное поле',
+      limit: 'От 3 до 20 символов',
+      oneOf: 'Пароли должны совпадать',
+      notOneOf: 'Должно быть уникальным',
+    },
+    404: {
+      notFound: 'Страница не найдена',
+      goOver: 'Но вы можете перейти ',
+      mainPage: 'на главную страницу',
+    },
+  },
+};

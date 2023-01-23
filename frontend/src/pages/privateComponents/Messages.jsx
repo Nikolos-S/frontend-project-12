@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { messagesSelector } from '../../slices/messagesSlice';
 import { channelsSelector } from '../../slices/channelsSlice';
 import Message from './Message.jsx';
 import InputForm from './InputForm.jsx';
 
 const Messages = () => {
+  const { t } = useTranslation();
   const { messages } = useSelector(messagesSelector);
   const { channels, currentChannelId } = useSelector(channelsSelector);
 
@@ -37,7 +39,7 @@ const Messages = () => {
       <div className="d-flex flex-column h-100">
         <div className="bg-light mb-4 p-3 shadow-sm small">
           <p className="m-0"><b>{`# ${curentChannel && curentChannel.name}`}</b></p>
-          <span className="text-muted">{`${curentMessages.length} сообщений`}</span>
+          <span className="text-muted">{`${curentMessages.length} ${t('chat.quantityMessage.key', { count: curentMessages.length })}`}</span>
         </div>
         <div id="messages-box" className="chat-messages overflow-auto px-5" onScroll={scrollHandler}>
           {curentMessages && curentMessages.map(({ id, body, username }) => (
