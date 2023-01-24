@@ -23,7 +23,6 @@ const LoginPage = () => {
   useEffect(() => {
     inputRef.current.focus();
   }, []);
-  console.log(authFailed);
   return (
     <Formik
       initialValues={{
@@ -44,11 +43,9 @@ const LoginPage = () => {
           if (err.isAxiosError && err.response.status === 401) {
             setAuthFailed(true);
             inputRef.current.select();
-            return;
+          } else {
+            getToast('Ошибка соединения', 'error');
           }
-          console.log(err);
-          getToast('Ошибка соединения', 'error');
-          throw err;
         }
       }}
     >

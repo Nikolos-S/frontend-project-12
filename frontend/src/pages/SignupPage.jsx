@@ -46,11 +46,9 @@ const SignupPage = () => {
           if (err.isAxiosError && err.response.status === 409) {
             setAuthFailed(true);
             inputRef.current.select();
-            return;
           }
           console.log(err);
           getToast('Ошибка соединения!', 'error');
-          throw err;
         }
       }}
     >

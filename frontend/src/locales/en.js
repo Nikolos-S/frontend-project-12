@@ -48,5 +48,11 @@ export default {
       goOver: 'But you can go ',
       mainPage: 'to the main page.',
     },
+    toast: {
+      add: 'The channel has been successfully created!',
+      rename: 'Channel successfully renamed!',
+      remove: 'The channel has been successfully deleted!',
+      error: 'Connection error!',
+    },
   },
 };
