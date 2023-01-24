@@ -11,6 +11,7 @@ import store from './slices/index.js';
 import { SocketContext } from './context/index.js';
 import { addMessage } from './slices/messagesSlice.js';
 import { addChannel, removeChannel, renameChannel } from './slices/channelsSlice.js';
+import getToast from './toast/toast';
 
 const RunApp = () => {
   const socket = io();
@@ -40,19 +41,25 @@ const RunApp = () => {
 
   const handleSubmitChannell = (payload) => {
     socket.emit('newChannel', payload, (response) => {
-      console.log(response.status);
+      if (response.status) {
+        getToast('Канал успешно создан!', 'success');
+      }
     });
   };
 
   const handleRemoveChannel = (payload) => {
     socket.emit('removeChannel', payload, (response) => {
-      console.log(response.status);
+      if (response.status) {
+        getToast('Канал успешно удален!', 'success');
+      }
     });
   };
 
   const handleRenameChannel = (payload) => {
     socket.emit('renameChannel', payload, (response) => {
-      console.log(response.status);
+      if (response.status) {
+        getToast('Канал успешно переименован!', 'success');
+      }
     });
   };
 
@@ -77,17 +84,3 @@ const RunApp = () => {
 };
 
 export default RunApp;
-
-/*
-import { toast } from 'react-toastify';
-const toastError = () => toast.error('text', {
-  position: 'top-right',
-  autoClose: 5000,
-  hideProgressBar: false,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-  theme: 'light',
-});
-*/

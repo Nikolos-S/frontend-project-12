@@ -6,6 +6,7 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../hooks';
+import getToast from '../toast/toast';
 
 const SignupPage = () => {
   const { t } = useTranslation();
@@ -47,6 +48,8 @@ const SignupPage = () => {
             inputRef.current.select();
             return;
           }
+          console.log(err);
+          getToast('Ошибка соединения!', 'error');
           throw err;
         }
       }}
