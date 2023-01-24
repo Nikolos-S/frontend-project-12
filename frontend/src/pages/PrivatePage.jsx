@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 import { channelsSelector } from '../slices/channelsSlice.js';
 import Channel from './privateComponents/Channel.jsx';
 import Messages from './privateComponents/Messages.jsx';
@@ -46,6 +47,7 @@ const PrivatePAge = () => {
         </div>
         <Messages />
       </div>
+      <ToastContainer />
     </div>
   );
 };

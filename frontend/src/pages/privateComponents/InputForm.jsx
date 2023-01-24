@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -11,21 +11,29 @@ const InputForm = ({ prop }) => {
   const [value, setValue] = useState('');
   const [readyStatus, setReadyStatus] = useState(false);
 
+  useEffect(() => {
+    const newReadyStatus = value === '';
+    setReadyStatus(newReadyStatus);
+  }, [value]);
+
   const handleChange = (e) => {
     setValue(e.target.value);
-    setReadyStatus(true);
+  };
+
+  const callback = () => {
+    setValue('');
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setReadyStatus(true);
     if (!value) {
       return;
     }
-    setReadyStatus(false);
+
     const currentName = JSON.parse(localStorage.getItem('userId')).username;
     const newMessage = { body: value, channelId: prop, username: currentName };
-    handleSubmitMessage(newMessage);
-    setValue('');
+    handleSubmitMessage(newMessage, callback);
   };
 
   return (
@@ -39,7 +47,7 @@ const InputForm = ({ prop }) => {
             onChange={handleChange}
             value={value}
           />
-          <Button type="submit" disabled={!readyStatus} variant="outline-primary">
+          <Button type="submit" disabled={readyStatus} variant="outline-primary">
             {t('chat.send')}
           </Button>
         </InputGroup>

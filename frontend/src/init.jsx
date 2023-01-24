@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { io } from 'socket.io-client';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-toastify/dist/ReactToastify.css';
 import { I18nextProvider } from 'react-i18next';
 import i18n from './locales/i18n';
 import App from './App.jsx';
@@ -29,9 +30,11 @@ const RunApp = () => {
     store.dispatch(renameChannel(payload));
   });
 
-  const handleSubmitMessage = (payload) => {
+  const handleSubmitMessage = (payload, callback) => {
     socket.emit('newMessage', payload, (response) => {
-      console.log(response.status);
+      if (response.status) {
+        callback();
+      }
     });
   };
 
@@ -74,3 +77,17 @@ const RunApp = () => {
 };
 
 export default RunApp;
+
+/*
+import { toast } from 'react-toastify';
+const toastError = () => toast.error('text', {
+  position: 'top-right',
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: 'light',
+});
+*/
