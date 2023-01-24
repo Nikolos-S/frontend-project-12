@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useDispatch } from 'react-redux';
+import filter from 'leo-profanity';
 import { useTranslation } from 'react-i18next';
 import { setChannel } from '../../slices/channelsSlice.js';
 
@@ -19,7 +20,7 @@ const Channel = (props) => {
       <Dropdown as={ButtonGroup} className="w-100">
         <Button onClick={handleSetChennel} variant={activeElement} className="w-100 rounded-0 text-start btn">
           <span className="me-1">#</span>
-          {channel.name}
+          {filter.clean(channel.name)}
         </Button>
         {channel.removable
         && (
