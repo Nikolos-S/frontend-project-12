@@ -1,11 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect, useRef } from 'react';
-import {
-  Button,
-  Form,
-  Alert,
-  FloatingLabel,
-} from 'react-bootstrap';
+import { Button, Form, FloatingLabel } from 'react-bootstrap';
 import { useNavigate, Link } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as yup from 'yup';
@@ -80,6 +75,7 @@ const SignupPage = () => {
                       <Form.Group className="form-floating mb-3">
                         <FloatingLabel label={t('form.regName')} className="mb-3">
                           <Form.Control
+                            className={touched.username && errors.username && 'is-invalid'}
                             type="text"
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -90,12 +86,13 @@ const SignupPage = () => {
                             required
                             ref={inputRef}
                           />
+                          <Form.Control.Feedback type="invalid">{errors.username}</Form.Control.Feedback>
                         </FloatingLabel>
-                        {touched.username && errors.username && <Alert show variant="danger">{errors.username}</Alert>}
                       </Form.Group>
                       <Form.Group className="mb-3">
                         <FloatingLabel label={t('form.pass')} className="mb-3">
                           <Form.Control
+                            className={touched.password && errors.password && 'is-invalid'}
                             type="password"
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -105,12 +102,13 @@ const SignupPage = () => {
                             isInvalid={authFailed}
                             required
                           />
+                          <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
                         </FloatingLabel>
-                        {touched.password && errors.password && <Alert show variant="danger">{errors.password}</Alert>}
                       </Form.Group>
                       <Form.Group className="mb-3">
                         <FloatingLabel label={t('form.repeatPass')} className="mb-3">
                           <Form.Control
+                            className={touched.repeatPass && errors.repeatPass && 'is-invalid'}
                             type="password"
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -120,9 +118,8 @@ const SignupPage = () => {
                             isInvalid={authFailed}
                             required
                           />
-                          <Form.Control.Feedback type="invalid">{t('err.alreadyExists')}</Form.Control.Feedback>
+                          <Form.Control.Feedback type="invalid">{errors.repeatPass ? errors.repeatPass : t('err.alreadyExists')}</Form.Control.Feedback>
                         </FloatingLabel>
-                        {touched.repeatPass && errors.repeatPass && <Alert show variant="danger">{errors.repeatPass}</Alert>}
                       </Form.Group>
                       <Button type="submit" className="w-100 wb-3" variant="outline-primary">{t('form.register')}</Button>
                     </fieldset>

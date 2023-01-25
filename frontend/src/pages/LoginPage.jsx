@@ -1,11 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect, useRef } from 'react';
-import {
-  Button,
-  Form,
-  Alert,
-  FloatingLabel,
-} from 'react-bootstrap';
+import { Button, Form, FloatingLabel } from 'react-bootstrap';
 import { useNavigate, Link } from 'react-router-dom';
 import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
@@ -78,6 +73,7 @@ const LoginPage = () => {
                       <Form.Group className="mb-3">
                         <FloatingLabel label={t('form.name')} className="mb-3">
                           <Form.Control
+                            className={touched.username && errors.username && 'is-invalid'}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.username}
@@ -88,12 +84,13 @@ const LoginPage = () => {
                             required
                             ref={inputRef}
                           />
+                          <Form.Control.Feedback type="invalid">{errors.username}</Form.Control.Feedback>
                         </FloatingLabel>
-                        {touched.username && errors.username && <Alert show variant="danger">{errors.username}</Alert>}
                       </Form.Group>
                       <Form.Group className="mb-3">
                         <FloatingLabel label={t('form.pass')} className="mb-3">
                           <Form.Control
+                            className={touched.password && errors.password && 'is-invalid'}
                             type="password"
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -104,9 +101,8 @@ const LoginPage = () => {
                             isInvalid={authFailed}
                             required
                           />
-                          <Form.Control.Feedback type="invalid">{t('err.invalid')}</Form.Control.Feedback>
+                          <Form.Control.Feedback type="invalid">{errors.password ? errors.password : t('err.invalid')}</Form.Control.Feedback>
                         </FloatingLabel>
-                        {touched.password && errors.password && <Alert show variant="danger">{errors.password}</Alert>}
                       </Form.Group>
                       <Button type="submit" className="w-100 wb-3" variant="outline-primary">{t('form.enter')}</Button>
                     </fieldset>
