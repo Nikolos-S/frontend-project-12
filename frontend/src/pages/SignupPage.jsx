@@ -20,7 +20,7 @@ const SignupPage = () => {
   const navigate = useNavigate();
 
   const schema = yup.object().shape({
-    username: yup.string().min(3, t('err.limitName')).max(20, t('err.limit')).required(t('err.required')),
+    username: yup.string().min(3, t('err.limitName')).max(20, t('err.limitName')).required(t('err.required')),
     password: yup.string().min(6, t('err.limitPass')).required(t('err.required')),
     repeatPass: yup.string().oneOf([yup.ref('password')], t('err.oneOf')),
   });
