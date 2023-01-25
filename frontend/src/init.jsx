@@ -76,19 +76,23 @@ const RunApp = () => {
   const container = ReactDOM.createRoot(document.getElementById('container'));
   container.render(
     <Provider store={store}>
-      <I18nextProvider i18n={i18n}>
-        <SocketContext.Provider value={
-          {
-            handleSubmitMessage,
-            handleSubmitChannell,
-            handleRemoveChannel,
-            handleRenameChannel,
+      <ErrorProvider config={rollbarConfig}>
+        <ErrorBoundary>
+          <I18nextProvider i18n={i18n}>
+            <SocketContext.Provider value={
+            {
+              handleSubmitMessage,
+              handleSubmitChannell,
+              handleRemoveChannel,
+              handleRenameChannel,
+            }
           }
-        }
-        >
-          <App />
-        </SocketContext.Provider>
-      </I18nextProvider>
+            >
+              <App />
+            </SocketContext.Provider>
+          </I18nextProvider>
+        </ErrorBoundary>
+      </ErrorProvider>
     </Provider>,
   );
 };
