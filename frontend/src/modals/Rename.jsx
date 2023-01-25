@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useFormik } from 'formik';
 import {
   Modal,
@@ -30,14 +30,18 @@ const Rename = (props) => {
       .notOneOf([getChannels], 'должно быть уникальным'),
   });
 
+  const [isBlock, setBlock] = useState(false);
+
   const callback = () => {
     getToast(t('toast.rename'), 'success');
+    setBlock(false);
     onHide();
   };
   const formik = useFormik({
     initialValues: { name: '' },
     validationSchema: schema,
     onSubmit: (value) => {
+      setBlock(true);
       handleRenameChannel({ id: modalInfo.item, name: value.name }, callback);
       if (currentChannelId === modalInfo.id) {
         dispatch(setChannel({ id: modalInfo.item }));
@@ -73,7 +77,7 @@ const Rename = (props) => {
           <Alert show={!!formik.errors.name} variant="danger">{formik.errors.name}</Alert>
           <div className="d-flex justify-content-end mt-2">
             <button type="button" onClick={onHide} className="me-2 btn btn-secondary">{t('modals.cancel')}</button>
-            <button type="submit" className="btn btn-primary">{t('modals.rename')}</button>
+            <button type="submit" disabled={isBlock} className="btn btn-primary">{t('modals.rename')}</button>
           </div>
         </form>
       </Modal.Body>

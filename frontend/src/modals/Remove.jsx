@@ -14,7 +14,7 @@ const Remove = (props) => {
   const { modalInfo, onHide } = props;
   const { handleRemoveChannel } = useSocket();
 
-  const [block, setBlock] = useState(false);
+  const [isBlock, setBlock] = useState(false);
 
   const callback = () => {
     getToast(t('toast.remove'), 'success');
@@ -39,7 +39,7 @@ const Remove = (props) => {
       <Modal.Body>{t('modals.sure')}</Modal.Body>
       <Modal.Footer>
         <Button onClick={onHide} type="button" variant="secondary">{t('modals.cancel')}</Button>
-        <Button disabled={block} onClick={onClick} variant="danger">{t('modals.remove')}</Button>
+        <Button disabled={isBlock} onClick={onClick} variant="danger">{t('modals.remove')}</Button>
       </Modal.Footer>
     </Modal>
   );

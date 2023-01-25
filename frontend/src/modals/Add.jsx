@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useFormik } from 'formik';
 import {
   Modal,
@@ -29,8 +29,11 @@ const Add = (props) => {
       .notOneOf([getChannels], t('err.notOneOf')),
   });
 
+  const [isBlock, setBlock] = useState(false);
+
   const callback = () => {
     getToast(t('toast.add'), 'success');
+    setBlock(false);
     onHide();
   };
 
@@ -38,6 +41,7 @@ const Add = (props) => {
     initialValues: { name: '' },
     validationSchema: schema,
     onSubmit: (value) => {
+      setBlock(true);
       handleSubmitChannell(value, callback);
     },
   });
@@ -70,7 +74,7 @@ const Add = (props) => {
           <Alert show={!!formik.errors.name} variant="danger">{formik.errors.name}</Alert>
           <div className="d-flex justify-content-end mt-2">
             <button type="button" onClick={onHide} className="me-2 btn btn-secondary">{t('modals.cancel')}</button>
-            <button type="submit" className="btn btn-primary">{t('modals.add')}</button>
+            <button type="submit" disabled={isBlock} className="btn btn-primary">{t('modals.add')}</button>
           </div>
         </form>
       </Modal.Body>
