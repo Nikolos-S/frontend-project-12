@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Button,
   Form,
@@ -16,8 +16,13 @@ import getToast from '../toast/toast';
 const LoginPage = () => {
   const { t } = useTranslation();
   const { logIn } = useAuth();
+  const inputRef = useRef();
   const [authFailed, setAuthFailed] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   const schema = yup.object().shape({
     username: yup.string().typeError(t('err.str')).required(t('err.required')),
@@ -40,6 +45,7 @@ const LoginPage = () => {
           logIn(true);
           navigate('/');
         } catch (err) {
+          inputRef.current.select();
           setSubmitting(false);
           if (err.isAxiosError && err.response.status === 401) {
             setAuthFailed(true);
@@ -80,6 +86,7 @@ const LoginPage = () => {
                             autoComplete="off"
                             isInvalid={authFailed}
                             required
+                            ref={inputRef}
                           />
                         </FloatingLabel>
                         {touched.username && errors.username && <Alert show variant="danger">{errors.username}</Alert>}
@@ -97,9 +104,9 @@ const LoginPage = () => {
                             isInvalid={authFailed}
                             required
                           />
+                          <Form.Control.Feedback type="invalid">{t('err.invalid')}</Form.Control.Feedback>
                         </FloatingLabel>
                         {touched.password && errors.password && <Alert show variant="danger">{errors.password}</Alert>}
-                        <Form.Control.Feedback type="invalid">{t('err.invalid')}</Form.Control.Feedback>
                       </Form.Group>
                       <Button type="submit" className="w-100 wb-3" variant="outline-primary">{t('form.enter')}</Button>
                     </fieldset>

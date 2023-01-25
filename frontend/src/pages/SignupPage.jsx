@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Button,
   Form,
@@ -17,7 +17,12 @@ const SignupPage = () => {
   const { t } = useTranslation();
   const { logIn } = useAuth();
   const [authFailed, setAuthFailed] = useState(false);
+  const inputRef = useRef();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   const schema = yup.object().shape({
     username: yup.string().min(3, t('err.limitName')).max(20, t('err.limitName')).required(t('err.required')),
@@ -42,6 +47,7 @@ const SignupPage = () => {
           logIn(true);
           navigate('/');
         } catch (err) {
+          inputRef.current.select();
           setSubmitting(false);
           if (err.isAxiosError && err.response.status === 409) {
             setAuthFailed(true);
@@ -82,6 +88,7 @@ const SignupPage = () => {
                             autoComplete="off"
                             isInvalid={authFailed}
                             required
+                            ref={inputRef}
                           />
                         </FloatingLabel>
                         {touched.username && errors.username && <Alert show variant="danger">{errors.username}</Alert>}
@@ -113,9 +120,9 @@ const SignupPage = () => {
                             isInvalid={authFailed}
                             required
                           />
+                          <Form.Control.Feedback type="invalid">{t('err.alreadyExists')}</Form.Control.Feedback>
                         </FloatingLabel>
                         {touched.repeatPass && errors.repeatPass && <Alert show variant="danger">{errors.repeatPass}</Alert>}
-                        <Form.Control.Feedback type="invalid">{t('err.alreadyExists')}</Form.Control.Feedback>
                       </Form.Group>
                       <Button type="submit" className="w-100 wb-3" variant="outline-primary">{t('form.register')}</Button>
                     </fieldset>
