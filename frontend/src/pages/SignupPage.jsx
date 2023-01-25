@@ -1,6 +1,11 @@
 import axios from 'axios';
-import React, { useEffect, useRef, useState } from 'react';
-import { Button, Form, Alert } from 'react-bootstrap';
+import React, { useState } from 'react';
+import {
+  Button,
+  Form,
+  Alert,
+  FloatingLabel,
+} from 'react-bootstrap';
 import { useNavigate, Link } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as yup from 'yup';
@@ -13,17 +18,12 @@ const SignupPage = () => {
   const { logIn } = useAuth();
   const [authFailed, setAuthFailed] = useState(false);
   const navigate = useNavigate();
-  const inputRef = useRef();
 
   const schema = yup.object().shape({
     username: yup.string().min(3, t('err.limitName')).max(20, t('err.limit')).required(t('err.required')),
     password: yup.string().min(6, t('err.limitPass')).required(t('err.required')),
     repeatPass: yup.string().required(t('err.required')).oneOf([yup.ref('password')], t('err.oneOf')),
   });
-
-  useEffect(() => {
-    inputRef.current.focus();
-  }, []);
 
   return (
     <Formik
@@ -45,7 +45,6 @@ const SignupPage = () => {
           setSubmitting(false);
           if (err.isAxiosError && err.response.status === 409) {
             setAuthFailed(true);
-            inputRef.current.select();
           } else {
             getToast(t('toast.error'), 'error');
           }
@@ -72,46 +71,49 @@ const SignupPage = () => {
                   <Form onSubmit={handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
                     <h1 className="text-center mb-4">{t('form.registration')}</h1>
                     <fieldset disabled={isSubmitting}>
-                      <Form.Group className="mb-3">
-                        <Form.Control
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.username}
-                          placeholder={t('form.regName')}
-                          name="username"
-                          autoComplete="off"
-                          isInvalid={authFailed}
-                          required
-                          ref={inputRef}
-                        />
+                      <Form.Group className="form-floating mb-3">
+                        <FloatingLabel label={t('form.regName')} className="mb-3">
+                          <Form.Control
+                            type="text"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.username}
+                            name="username"
+                            autoComplete="off"
+                            isInvalid={authFailed}
+                            required
+                          />
+                        </FloatingLabel>
                         {touched.username && errors.username && <Alert show variant="danger">{errors.username}</Alert>}
                       </Form.Group>
                       <Form.Group className="mb-3">
-                        <Form.Control
-                          type="password"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.password}
-                          placeholder={t('form.pass')}
-                          name="password"
-                          autoComplete="off"
-                          isInvalid={authFailed}
-                          required
-                        />
+                        <FloatingLabel label={t('form.pass')} className="mb-3">
+                          <Form.Control
+                            type="password"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.password}
+                            name="password"
+                            autoComplete="off"
+                            isInvalid={authFailed}
+                            required
+                          />
+                        </FloatingLabel>
                         {touched.password && errors.password && <Alert show variant="danger">{errors.password}</Alert>}
                       </Form.Group>
                       <Form.Group className="mb-3">
-                        <Form.Control
-                          type="password"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.repeatPass}
-                          placeholder={t('form.repeatPass')}
-                          name="repeatPass"
-                          autoComplete="off"
-                          isInvalid={authFailed}
-                          required
-                        />
+                        <FloatingLabel label={t('form.repeatPass')} className="mb-3">
+                          <Form.Control
+                            type="password"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.repeatPass}
+                            name="repeatPass"
+                            autoComplete="off"
+                            isInvalid={authFailed}
+                            required
+                          />
+                        </FloatingLabel>
                         {touched.repeatPass && errors.repeatPass && <Alert show variant="danger">{errors.repeatPass}</Alert>}
                         <Form.Control.Feedback type="invalid">{t('err.alreadyExists')}</Form.Control.Feedback>
                       </Form.Group>

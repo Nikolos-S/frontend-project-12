@@ -1,6 +1,11 @@
 import axios from 'axios';
-import React, { useEffect, useRef, useState } from 'react';
-import { Button, Form, Alert } from 'react-bootstrap';
+import React, { useState } from 'react';
+import {
+  Button,
+  Form,
+  Alert,
+  FloatingLabel,
+} from 'react-bootstrap';
 import { useNavigate, Link } from 'react-router-dom';
 import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
@@ -13,16 +18,12 @@ const LoginPage = () => {
   const { logIn } = useAuth();
   const [authFailed, setAuthFailed] = useState(false);
   const navigate = useNavigate();
-  const inputRef = useRef();
 
   const schema = yup.object().shape({
     username: yup.string().typeError(t('err.str')).required(t('err.required')),
     password: yup.string().typeError(t('err.str')).required(t('err.required')),
   });
 
-  useEffect(() => {
-    inputRef.current.focus();
-  }, []);
   return (
     <Formik
       initialValues={{
@@ -42,8 +43,6 @@ const LoginPage = () => {
           setSubmitting(false);
           if (err.isAxiosError && err.response.status === 401) {
             setAuthFailed(true);
-            inputRef.current.select();
-            console.log(err.response);
           } else {
             getToast(t('toast.error'), 'error');
           }
@@ -71,33 +70,34 @@ const LoginPage = () => {
                     <h1 className="text-center mb-4">{t('form.enter')}</h1>
                     <fieldset disabled={isSubmitting}>
                       <Form.Group className="mb-3">
-                        <Form.Control
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.username}
-                          name="username"
-                          id="username"
-                          placeholder={t('form.name')}
-                          autoComplete="off"
-                          isInvalid={authFailed}
-                          required
-                          ref={inputRef}
-                        />
+                        <FloatingLabel label={t('form.name')} className="mb-3">
+                          <Form.Control
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.username}
+                            name="username"
+                            id="username"
+                            autoComplete="off"
+                            isInvalid={authFailed}
+                            required
+                          />
+                        </FloatingLabel>
                         {touched.username && errors.username && <Alert show variant="danger">{errors.username}</Alert>}
                       </Form.Group>
                       <Form.Group className="mb-3">
-                        <Form.Control
-                          type="password"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.password}
-                          name="password"
-                          id="password"
-                          placeholder={t('form.pass')}
-                          autoComplete="off"
-                          isInvalid={authFailed}
-                          required
-                        />
+                        <FloatingLabel label={t('form.pass')} className="mb-3">
+                          <Form.Control
+                            type="password"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.password}
+                            name="password"
+                            id="password"
+                            autoComplete="off"
+                            isInvalid={authFailed}
+                            required
+                          />
+                        </FloatingLabel>
                         {touched.password && errors.password && <Alert show variant="danger">{errors.password}</Alert>}
                         <Form.Control.Feedback type="invalid">{t('err.invalid')}</Form.Control.Feedback>
                       </Form.Group>

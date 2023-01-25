@@ -5,6 +5,7 @@ import {
   FormGroup,
   FormControl,
   Alert,
+  FloatingLabel,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
@@ -63,16 +64,17 @@ const Rename = (props) => {
       <Modal.Body>
         <form onSubmit={formik.handleSubmit}>
           <FormGroup>
-            <FormControl
-              required
-              ref={inputRef}
-              onChange={formik.handleChange}
-              value={formik.values.name}
-              data-testid="input-body"
-              placeholder={t('modals.placeholder')}
-              name="name"
-              id="name"
-            />
+            <FloatingLabel label={t('modals.placeholder')} className="mb-3">
+              <FormControl
+                required
+                ref={inputRef}
+                onChange={formik.handleChange}
+                value={formik.values.name}
+                data-testid="input-body"
+                name="name"
+                id="name"
+              />
+            </FloatingLabel>
           </FormGroup>
           <Alert show={!!formik.errors.name} variant="danger">{formik.errors.name}</Alert>
           <div className="d-flex justify-content-end mt-2">
