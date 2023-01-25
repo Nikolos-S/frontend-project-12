@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
+import { Provider as ErrorProvider, ErrorBoundary } from '@rollbar/react';
 import { io } from 'socket.io-client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,6 +15,12 @@ import { addMessage } from './slices/messagesSlice.js';
 import { addChannel, removeChannel, renameChannel } from './slices/channelsSlice.js';
 
 const RunApp = () => {
+  const rollbarConfig = {
+    accessToken: 'process.env.REACT_APP_ROLLBAR_ACCESS_TOKEN',
+    captureUncaught: true,
+    captureUnhandledRejections: true,
+  };
+
   filter.clearList();
   filter.add(filter.getDictionary('en'));
   filter.add(filter.getDictionary('ru'));

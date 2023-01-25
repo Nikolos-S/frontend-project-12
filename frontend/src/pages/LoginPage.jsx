@@ -45,7 +45,7 @@ const LoginPage = () => {
             inputRef.current.select();
             console.log(err.response);
           } else {
-            getToast('Ошибка соединения', 'error');
+            getToast(t('toast.error'), 'error');
           }
         }
       }}

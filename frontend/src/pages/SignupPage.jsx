@@ -16,8 +16,8 @@ const SignupPage = () => {
   const inputRef = useRef();
 
   const schema = yup.object().shape({
-    username: yup.string().min(3, t('err.limit')).max(20, t('err.limit')).required(t('err.required')),
-    password: yup.string().min(3, t('err.limit')).max(20, t('err.limit')).required(t('err.required')),
+    username: yup.string().min(3, t('err.limitName')).max(20, t('err.limit')).required(t('err.required')),
+    password: yup.string().min(6, t('err.limitPass')).max(20, t('err.limit')).required(t('err.required')),
     repeatPass: yup.string().required(t('err.required')).oneOf([yup.ref('password')], t('err.oneOf')),
   });
 
@@ -47,7 +47,7 @@ const SignupPage = () => {
             setAuthFailed(true);
             inputRef.current.select();
           } else {
-            getToast('Ошибка соединения!', 'error');
+            getToast(t('toast.error'), 'error');
           }
         }
       }}

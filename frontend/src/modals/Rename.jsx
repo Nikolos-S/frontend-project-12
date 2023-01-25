@@ -24,10 +24,10 @@ const Rename = (props) => {
 
   const schema = yup.object().shape({
     name: yup.string()
-      .min(3, 'От 3 до 20 символов')
-      .max(20, 'От 3 до 20 символов')
+      .min(3, t('err.limitName'))
+      .max(20, t('err.limitName'))
       .required('поле обязательно')
-      .notOneOf([getChannels], 'должно быть уникальным'),
+      .notOneOf([getChannels], t('err.notOneOf')),
   });
 
   const [isBlock, setBlock] = useState(false);

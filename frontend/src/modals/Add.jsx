@@ -23,8 +23,8 @@ const Add = (props) => {
 
   const schema = yup.object().shape({
     name: yup.string()
-      .min(3, t('err.limit'))
-      .max(20, t('err.limit'))
+      .min(3, t('err.limitName'))
+      .max(20, t('err.limitName'))
       .required(t('err.required'))
       .notOneOf([getChannels], t('err.notOneOf')),
   });
