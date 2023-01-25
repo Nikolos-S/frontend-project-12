@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { io } from 'socket.io-client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
-import { I18nextProvider, useTranslation } from 'react-i18next';
+import { I18nextProvider } from 'react-i18next';
 import filter from 'leo-profanity';
 import i18n from './locales/i18n';
 import App from './App.jsx';
@@ -12,13 +12,11 @@ import store from './slices/index.js';
 import { SocketContext } from './context/index.js';
 import { addMessage } from './slices/messagesSlice.js';
 import { addChannel, removeChannel, renameChannel } from './slices/channelsSlice.js';
-import getToast from './toast/toast';
 
 const RunApp = () => {
   filter.clearList();
   filter.add(filter.getDictionary('en'));
   filter.add(filter.getDictionary('ru'));
-  const { t } = useTranslation;
   const socket = io();
   socket.on('newMessage', (payload) => {
     store.dispatch(addMessage(payload));
@@ -44,26 +42,26 @@ const RunApp = () => {
     });
   };
 
-  const handleSubmitChannell = (payload) => {
+  const handleSubmitChannell = (payload, callback) => {
     socket.emit('newChannel', payload, (response) => {
       if (response.status) {
-        getToast(t('toast.add'), 'success');
+        callback();
       }
     });
   };
 
-  const handleRemoveChannel = (payload) => {
+  const handleRemoveChannel = (payload, callback) => {
     socket.emit('removeChannel', payload, (response) => {
       if (response.status) {
-        getToast(t('toast.remove'), 'success');
+        callback();
       }
     });
   };
 
-  const handleRenameChannel = (payload) => {
+  const handleRenameChannel = (payload, callback) => {
     socket.emit('renameChannel', payload, (response) => {
       if (response.status) {
-        getToast(t('toast.rename'), 'success');
+        callback();
       }
     });
   };

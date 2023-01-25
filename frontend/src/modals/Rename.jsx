@@ -11,6 +11,7 @@ import * as yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
 import { channelsSelector, setChannel } from '../slices/channelsSlice.js';
 import { useSocket } from '../hooks/index.jsx';
+import getToast from '../toast/toast.js';
 
 const Rename = (props) => {
   const { t } = useTranslation();
@@ -29,15 +30,18 @@ const Rename = (props) => {
       .notOneOf([getChannels], 'должно быть уникальным'),
   });
 
+  const callback = () => {
+    getToast(t('toast.rename'), 'success');
+    onHide();
+  };
   const formik = useFormik({
     initialValues: { name: '' },
     validationSchema: schema,
     onSubmit: (value) => {
-      handleRenameChannel({ id: modalInfo.item, name: value.name });
+      handleRenameChannel({ id: modalInfo.item, name: value.name }, callback);
       if (currentChannelId === modalInfo.id) {
         dispatch(setChannel({ id: modalInfo.item }));
       }
-      onHide();
     },
   });
 

@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 
-const getToast = (text, foo) => toast[foo](text, {
+const getToast = (text, type) => toast[type](text, {
   position: 'top-right',
   autoClose: 5000,
   hideProgressBar: false,

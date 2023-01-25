@@ -11,6 +11,7 @@ import * as yup from 'yup';
 import { useSelector } from 'react-redux';
 import { channelsSelector } from '../slices/channelsSlice.js';
 import { useSocket } from '../hooks/index.jsx';
+import getToast from '../toast/toast.js';
 
 const Add = (props) => {
   const { t } = useTranslation();
@@ -28,12 +29,16 @@ const Add = (props) => {
       .notOneOf([getChannels], t('err.notOneOf')),
   });
 
+  const callback = () => {
+    getToast(t('toast.add'), 'success');
+    onHide();
+  };
+
   const formik = useFormik({
     initialValues: { name: '' },
     validationSchema: schema,
     onSubmit: (value) => {
-      handleSubmitChannell(value);
-      onHide();
+      handleSubmitChannell(value, callback);
     },
   });
 

@@ -6,6 +6,7 @@ import {
   Route,
   Navigate,
 } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import Header from './pages/Nav.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
@@ -39,7 +40,6 @@ const PrivateRoute = ({ children }) => {
   const { loggedId } = useAuth();
   return loggedId ? children : <Navigate to="/login" />;
 // state={{ from: location }} - при необходимости задавать динамический путь после входа
-// const location = useLocation();
 };
 
 const App = () => (
@@ -61,6 +61,7 @@ const App = () => (
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>
+      <ToastContainer />
     </BrowserRouter>
   </AuthProvider>
 );
