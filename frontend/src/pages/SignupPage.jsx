@@ -22,7 +22,7 @@ const SignupPage = () => {
   const schema = yup.object().shape({
     username: yup.string().min(3, t('err.limitName')).max(20, t('err.limit')).required(t('err.required')),
     password: yup.string().min(6, t('err.limitPass')).required(t('err.required')),
-    repeatPass: yup.string().required(t('err.required')).oneOf([yup.ref('password')], t('err.oneOf')),
+    repeatPass: yup.string().oneOf([yup.ref('password')], t('err.oneOf')),
   });
 
   return (
