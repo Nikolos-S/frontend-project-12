@@ -17,7 +17,7 @@ const SignupPage = () => {
 
   const schema = yup.object().shape({
     username: yup.string().min(3, t('err.limitName')).max(20, t('err.limit')).required(t('err.required')),
-    password: yup.string().min(6, t('err.limitPass')).max(20, t('err.limit')).required(t('err.required')),
+    password: yup.string().min(6, t('err.limitPass')).required(t('err.required')),
     repeatPass: yup.string().required(t('err.required')).oneOf([yup.ref('password')], t('err.oneOf')),
   });
 
@@ -77,7 +77,7 @@ const SignupPage = () => {
                           onChange={handleChange}
                           onBlur={handleBlur}
                           value={values.username}
-                          placeholder={t('form.name')}
+                          placeholder={t('form.regName')}
                           name="username"
                           autoComplete="off"
                           isInvalid={authFailed}
