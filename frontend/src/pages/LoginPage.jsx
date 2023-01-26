@@ -79,7 +79,7 @@ const LoginPage = () => {
                             onBlur={handleBlur}
                             value={values.username}
                             name="username"
-                            id="username"
+                            placeholder={t('form.name')}
                             autoComplete="off"
                             isInvalid={(touched.username && errors.username) || authFailed}
                             required
@@ -96,7 +96,7 @@ const LoginPage = () => {
                             onBlur={handleBlur}
                             value={values.password}
                             name="password"
-                            id="password"
+                            placeholder={t('form.pass')}
                             autoComplete="off"
                             isInvalid={(touched.password && errors.password) || authFailed}
                             required

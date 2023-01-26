@@ -68,7 +68,7 @@ const Add = (props) => {
                 value={formik.values.name}
                 data-testid="input-body"
                 name="name"
-                id="name"
+                placeholder={t('modals.placeholder')}
               />
             </FloatingLabel>
           </FormGroup>

@@ -83,6 +83,7 @@ const SignupPage = () => {
                             value={values.username}
                             name="username"
                             autoComplete="off"
+                            placeholder={t('form.regName')}
                             isInvalid={(touched.username && errors.username) || authFailed}
                             required
                             ref={inputRef}
@@ -99,6 +100,7 @@ const SignupPage = () => {
                             value={values.password}
                             name="password"
                             autoComplete="off"
+                            placeholder={t('form.pass')}
                             isInvalid={(touched.password && errors.password) || authFailed}
                             required
                           />
@@ -114,6 +116,7 @@ const SignupPage = () => {
                             value={values.repeatPass}
                             name="repeatPass"
                             autoComplete="off"
+                            placeholder={t('form.repeatPass')}
                             isInvalid={(touched.repeatPass && errors.repeatPass) || authFailed}
                             required
                           />
