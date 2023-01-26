@@ -74,7 +74,7 @@ const SignupPage = () => {
                   <Form onSubmit={handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
                     <h1 className="text-center mb-4">{t('form.registration')}</h1>
                     <fieldset disabled={isSubmitting}>
-                      <Form.Group className="form-floating mb-3">
+                      <Form.Group className="mb-3">
                         <FloatingLabel label={t('form.regName')} className="mb-3">
                           <Form.Control
                             type="text"
