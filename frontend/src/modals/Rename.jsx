@@ -64,7 +64,7 @@ const Rename = (props) => {
       <Modal.Body>
         <form onSubmit={formik.handleSubmit}>
           <FormGroup>
-            <FloatingLabel label={t('modals.placeholder')} className="mb-3">
+            <FloatingLabel controlId="name" label={t('modals.placeholder')} className="mb-3">
               <FormControl
                 required
                 ref={inputRef}
@@ -72,7 +72,7 @@ const Rename = (props) => {
                 value={formik.values.name}
                 data-testid="input-body"
                 name="name"
-                id="name"
+                placeholder={t('modals.placeholder')}
               />
             </FloatingLabel>
           </FormGroup>
