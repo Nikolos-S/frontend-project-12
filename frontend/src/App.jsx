@@ -38,7 +38,7 @@ const AuthProvider = ({ children }) => {
 
 const PrivateRoute = ({ children }) => {
   const { loggedId } = useAuth();
-  return loggedId ? children : <Navigate to="/login" />;
+  return loggedId || localStorage.getItem('userId') ? children : <Navigate to="/login" />;
 // state={{ from: location }} - при необходимости задавать динамический путь после входа
 };
 

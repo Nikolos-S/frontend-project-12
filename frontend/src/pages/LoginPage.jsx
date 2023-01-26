@@ -20,8 +20,8 @@ const LoginPage = () => {
   }, []);
 
   const schema = yup.object().shape({
-    username: yup.string().typeError(t('err.str')).required(t('err.required')),
-    password: yup.string().typeError(t('err.str')).required(t('err.required')),
+    username: yup.string().typeError(t('err.str')),
+    password: yup.string().typeError(t('err.str')),
   });
 
   return (
@@ -42,8 +42,8 @@ const LoginPage = () => {
         } catch (err) {
           inputRef.current.select();
           setSubmitting(false);
-          if (err.code === 'ERR_NETWORK') {
-            console.log(err.code);
+          if (err.message === 'Network Error') {
+            console.log(err);
             getToast(t('toast.error'), 'error');
           }
           if (err.isAxiosError && err.response.status === 401) {
