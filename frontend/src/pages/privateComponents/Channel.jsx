@@ -14,7 +14,9 @@ const Channel = (props) => {
   const handleSetChennel = () => {
     dispatch(setChannel({ id: channel.id }));
   };
+
   const activeElement = channel.id === curentId ? 'secondary' : 'light';
+
   return (
     <li className="nav-item w-100">
       <Dropdown as={ButtonGroup} className="w-100">
