@@ -77,7 +77,6 @@ const SignupPage = () => {
                       <Form.Group className="form-floating mb-3">
                         <FloatingLabel label={t('form.regName')} className="mb-3">
                           <Form.Control
-                            className={touched.username && errors.username && 'is-invalid'}
                             type="text"
                             onChange={handleChange}
                             onBlur={handleBlur}
