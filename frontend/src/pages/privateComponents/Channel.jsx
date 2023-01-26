@@ -24,7 +24,9 @@ const Channel = (props) => {
         </Button>
         {channel.removable
         && (
-          <Dropdown.Toggle split variant={activeElement} id={channel.id} />
+          <Dropdown.Toggle split variant={activeElement} id={channel.id}>
+            <span className="visually-hidden">Управление каналом</span>
+          </Dropdown.Toggle>
         )}
         <Dropdown.Menu>
           <Dropdown.Item onClick={() => showModal('removing', channel.id)} id={channel.id}>{t('modals.remove')}</Dropdown.Item>
