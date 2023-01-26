@@ -46,7 +46,8 @@ const SignupPage = () => {
           setSubmitting(false);
           if (err.isAxiosError && err.response.status === 409) {
             setAuthFailed(true);
-          } else {
+          } if (err.code === 'ERR_NETWORK') {
+            console.log(err.code);
             getToast(t('toast.error'), 'error');
           }
         }
