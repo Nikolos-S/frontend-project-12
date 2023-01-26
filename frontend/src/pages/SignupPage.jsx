@@ -20,8 +20,8 @@ const SignupPage = () => {
   }, []);
 
   const schema = yup.object().shape({
-    username: yup.string().min(3, t('err.limitName')).max(20, t('err.limitName')).required(t('err.required')),
-    password: yup.string().min(6, t('err.limitPass')).required(t('err.required')),
+    username: yup.string().min(3, t('err.limitName')).max(20, t('err.limitName')),
+    password: yup.string().min(6, t('err.limitPass')),
     repeatPass: yup.string().oneOf([yup.ref('password')], t('err.oneOf')),
   });
 
@@ -44,11 +44,12 @@ const SignupPage = () => {
         } catch (err) {
           inputRef.current.select();
           setSubmitting(false);
-          if (err.isAxiosError && err.response.status === 409) {
-            setAuthFailed(true);
-          } if (err.code === 'ERR_NETWORK') {
+          if (err.code === 'ERR_NETWORK') {
             console.log(err.code);
             getToast(t('toast.error'), 'error');
+          }
+          if (err.isAxiosError && err.response.status === 409) {
+            setAuthFailed(true);
           }
         }
       }}

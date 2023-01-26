@@ -42,12 +42,12 @@ const LoginPage = () => {
         } catch (err) {
           inputRef.current.select();
           setSubmitting(false);
-          if (err.isAxiosError && err.response.status === 401) {
-            setAuthFailed(true);
-          }
           if (err.code === 'ERR_NETWORK') {
             console.log(err.code);
             getToast(t('toast.error'), 'error');
+          }
+          if (err.isAxiosError && err.response.status === 401) {
+            setAuthFailed(true);
           }
         }
       }}
