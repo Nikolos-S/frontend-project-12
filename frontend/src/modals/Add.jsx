@@ -57,7 +57,6 @@ const Add = (props) => {
       <Modal.Header closeButton onHide={onHide}>
         <Modal.Title>{t('modals.addChannel')}</Modal.Title>
       </Modal.Header>
-
       <Modal.Body>
         <form onSubmit={formik.handleSubmit}>
           <FormGroup>
