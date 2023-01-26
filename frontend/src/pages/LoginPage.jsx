@@ -73,14 +73,13 @@ const LoginPage = () => {
                       <Form.Group className="mb-3">
                         <FloatingLabel label={t('form.name')} className="mb-3">
                           <Form.Control
-                            className={touched.username && errors.username && 'is-invalid'}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.username}
                             name="username"
                             id="username"
                             autoComplete="off"
-                            isInvalid={authFailed}
+                            isInvalid={(touched.username && errors.username) || authFailed}
                             required
                             ref={inputRef}
                           />
@@ -90,7 +89,6 @@ const LoginPage = () => {
                       <Form.Group className="mb-3">
                         <FloatingLabel label={t('form.pass')} className="mb-3">
                           <Form.Control
-                            className={touched.password && errors.password && 'is-invalid'}
                             type="password"
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -98,7 +96,7 @@ const LoginPage = () => {
                             name="password"
                             id="password"
                             autoComplete="off"
-                            isInvalid={authFailed}
+                            isInvalid={(touched.password && errors.password) || authFailed}
                             required
                           />
                           <Form.Control.Feedback type="invalid">{errors.password ? errors.password : t('err.invalid')}</Form.Control.Feedback>

@@ -82,7 +82,7 @@ const SignupPage = () => {
                             value={values.username}
                             name="username"
                             autoComplete="off"
-                            isInvalid={authFailed}
+                            isInvalid={(touched.username && errors.username) || authFailed}
                             required
                             ref={inputRef}
                           />
@@ -92,14 +92,13 @@ const SignupPage = () => {
                       <Form.Group className="mb-3">
                         <FloatingLabel label={t('form.pass')} className="mb-3">
                           <Form.Control
-                            className={touched.password && errors.password && 'is-invalid'}
                             type="password"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.password}
                             name="password"
                             autoComplete="off"
-                            isInvalid={authFailed}
+                            isInvalid={(touched.password && errors.password) || authFailed}
                             required
                           />
                           <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
@@ -108,14 +107,13 @@ const SignupPage = () => {
                       <Form.Group className="mb-3">
                         <FloatingLabel label={t('form.repeatPass')} className="mb-3">
                           <Form.Control
-                            className={touched.repeatPass && errors.repeatPass && 'is-invalid'}
                             type="password"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.repeatPass}
                             name="repeatPass"
                             autoComplete="off"
-                            isInvalid={authFailed}
+                            isInvalid={(touched.repeatPass && errors.repeatPass) || authFailed}
                             required
                           />
                           <Form.Control.Feedback type="invalid">{errors.repeatPass ? errors.repeatPass : t('err.alreadyExists')}</Form.Control.Feedback>
