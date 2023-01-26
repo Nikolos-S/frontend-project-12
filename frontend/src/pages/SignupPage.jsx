@@ -75,7 +75,7 @@ const SignupPage = () => {
                     <h1 className="text-center mb-4">{t('form.registration')}</h1>
                     <fieldset disabled={isSubmitting}>
                       <Form.Group className="mb-3">
-                        <FloatingLabel label={t('form.regName')} className="mb-3">
+                        <FloatingLabel controlId="username" label={t('form.regName')} className="mb-3">
                           <Form.Control
                             type="text"
                             onChange={handleChange}
@@ -92,7 +92,7 @@ const SignupPage = () => {
                         </FloatingLabel>
                       </Form.Group>
                       <Form.Group className="mb-3">
-                        <FloatingLabel label={t('form.pass')} className="mb-3">
+                        <FloatingLabel controlId="password" label={t('form.pass')} className="mb-3">
                           <Form.Control
                             type="password"
                             onChange={handleChange}
@@ -108,7 +108,7 @@ const SignupPage = () => {
                         </FloatingLabel>
                       </Form.Group>
                       <Form.Group className="mb-3">
-                        <FloatingLabel label={t('form.repeatPass')} className="mb-3">
+                        <FloatingLabel controlId="repeatPass" label={t('form.repeatPass')} className="mb-3">
                           <Form.Control
                             type="password"
                             onChange={handleChange}

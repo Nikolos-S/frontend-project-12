@@ -73,7 +73,7 @@ const LoginPage = () => {
                     <h1 className="text-center mb-4">{t('form.enter')}</h1>
                     <fieldset disabled={isSubmitting}>
                       <Form.Group className="mb-3">
-                        <FloatingLabel label={t('form.name')} className="mb-3">
+                        <FloatingLabel controlId="username" label={t('form.name')} className="mb-3">
                           <Form.Control
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -89,7 +89,7 @@ const LoginPage = () => {
                         </FloatingLabel>
                       </Form.Group>
                       <Form.Group className="mb-3">
-                        <FloatingLabel label={t('form.pass')} className="mb-3">
+                        <FloatingLabel controlId="password" label={t('form.pass')} className="mb-3">
                           <Form.Control
                             type="password"
                             onChange={handleChange}
