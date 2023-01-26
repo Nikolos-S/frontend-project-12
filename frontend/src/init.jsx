@@ -13,10 +13,12 @@ import store from './slices/index.js';
 import { SocketContext } from './context/index.js';
 import { addMessage } from './slices/messagesSlice.js';
 import { addChannel, removeChannel, renameChannel } from './slices/channelsSlice.js';
+// import getToast from './toast/toast.js';
 
 const RunApp = () => {
+  // const { t } = useTranslation();
   const rollbarConfig = {
-    accessToken: 'process.env.REACT_APP_ROLLBAR_ACCESS_TOKEN',
+    accessToken: process.env.REACT_APP_ROLLBAR_ACCESS_TOKEN,
     captureUncaught: true,
     captureUnhandledRejections: true,
   };
@@ -24,7 +26,9 @@ const RunApp = () => {
   filter.clearList();
   filter.add(filter.getDictionary('en'));
   filter.add(filter.getDictionary('ru'));
+
   const socket = io();
+
   socket.on('newMessage', (payload) => {
     store.dispatch(addMessage(payload));
   });
@@ -41,32 +45,8 @@ const RunApp = () => {
     store.dispatch(renameChannel(payload));
   });
 
-  const handleSubmitMessage = (payload, callback) => {
-    socket.emit('newMessage', payload, (response) => {
-      if (response.status) {
-        callback();
-      }
-    });
-  };
-
-  const handleSubmitChannell = (payload, callback) => {
-    socket.emit('newChannel', payload, (response) => {
-      if (response.status) {
-        callback();
-      }
-    });
-  };
-
-  const handleRemoveChannel = (payload, callback) => {
-    socket.emit('removeChannel', payload, (response) => {
-      if (response.status) {
-        callback();
-      }
-    });
-  };
-
-  const handleRenameChannel = (payload, callback) => {
-    socket.emit('renameChannel', payload, (response) => {
+  const submit = (action, payload, callback) => {
+    socket.emit(action, payload, (response) => {
       if (response.status) {
         callback();
       }
@@ -79,15 +59,7 @@ const RunApp = () => {
       <ErrorProvider config={rollbarConfig}>
         <ErrorBoundary>
           <I18nextProvider i18n={i18n}>
-            <SocketContext.Provider value={
-            {
-              handleSubmitMessage,
-              handleSubmitChannell,
-              handleRemoveChannel,
-              handleRenameChannel,
-            }
-          }
-            >
+            <SocketContext.Provider value={{ submit }}>
               <App />
             </SocketContext.Provider>
           </I18nextProvider>

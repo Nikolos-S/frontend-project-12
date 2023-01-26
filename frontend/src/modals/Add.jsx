@@ -18,7 +18,7 @@ const Add = (props) => {
   const { t } = useTranslation();
   const { channels } = useSelector(channelsSelector);
   const { onHide } = props;
-  const { handleSubmitChannell } = useSocket();
+  const { submit } = useSocket();
 
   const getChannels = channels.reduce((acc, { name }) => [...acc, name], []);
 
@@ -43,7 +43,7 @@ const Add = (props) => {
     validationSchema: schema,
     onSubmit: (value) => {
       setBlock(true);
-      handleSubmitChannell(value, callback);
+      submit('newChannel', value, callback);
     },
   });
 

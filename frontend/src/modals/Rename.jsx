@@ -19,7 +19,7 @@ const Rename = (props) => {
   const dispatch = useDispatch();
   const { channels, currentChannelId } = useSelector(channelsSelector);
   const { modalInfo, onHide } = props;
-  const { handleRenameChannel } = useSocket();
+  const { submit } = useSocket();
 
   const getChannels = channels.reduce((acc, { name }) => [...acc, name], []);
 
@@ -43,7 +43,7 @@ const Rename = (props) => {
     validationSchema: schema,
     onSubmit: (value) => {
       setBlock(true);
-      handleRenameChannel({ id: modalInfo.item, name: value.name }, callback);
+      submit('renameChannel', { id: modalInfo.item, name: value.name }, callback);
       if (currentChannelId === modalInfo.id) {
         dispatch(setChannel({ id: modalInfo.item }));
       }

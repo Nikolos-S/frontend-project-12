@@ -12,7 +12,7 @@ const Remove = (props) => {
   const { currentChannelId } = useSelector(channelsSelector);
 
   const { modalInfo, onHide } = props;
-  const { handleRemoveChannel } = useSocket();
+  const { submit } = useSocket();
 
   const [isBlock, setBlock] = useState(false);
 
@@ -24,7 +24,7 @@ const Remove = (props) => {
 
   const onClick = () => {
     setBlock(true);
-    handleRemoveChannel({ id: modalInfo.item }, callback);
+    submit('removeChannel', { id: modalInfo.item }, callback);
     if (currentChannelId === modalInfo.item) {
       dispatch(setChannel({ id: 1 }));
     }
