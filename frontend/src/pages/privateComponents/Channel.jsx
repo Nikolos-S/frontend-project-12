@@ -20,13 +20,13 @@ const Channel = (props) => {
   return (
     <li className="nav-item w-100">
       <Dropdown as={ButtonGroup} className="w-100">
-        <Button onClick={handleSetChennel} variant={activeElement} className="w-100 rounded-0 text-start btn">
+        <Button onClick={handleSetChennel} variant={activeElement} className="w-100 rounded-0 text-start btn text-truncate">
           <span className="me-1">#</span>
           {filter.clean(channel.name)}
         </Button>
         {channel.removable
         && (
-          <Dropdown.Toggle split variant={activeElement} id={channel.id}>
+          <Dropdown.Toggle className="br-0" split variant={activeElement} id={channel.id}>
             <span className="visually-hidden">Управление каналом</span>
           </Dropdown.Toggle>
         )}

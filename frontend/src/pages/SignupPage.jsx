@@ -131,7 +131,7 @@ const SignupPage = () => {
                   <div className="text-center">
                     <span>
                       {t('form.noAcc')}
-                      <Link to="/login">{t('form.enter')}</Link>
+                      <Link to="/">{t('form.enter')}</Link>
                     </span>
                   </div>
                 </div>

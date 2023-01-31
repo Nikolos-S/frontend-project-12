@@ -10,7 +10,7 @@ const ErrorPage = () => {
       <h1 className="h4 text-muted">{t('404.notFound')}</h1>
       <p className="text-muted">
         {t('404.goOver')}
-        <Link to="/login">{t('404.mainPage')}</Link>
+        <Link to="/">{t('404.mainPage')}</Link>
       </p>
     </div>
   );

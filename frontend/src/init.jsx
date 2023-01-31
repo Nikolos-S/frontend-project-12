@@ -13,10 +13,8 @@ import store from './slices/index.js';
 import { SocketContext } from './context/index.js';
 import { addMessage } from './slices/messagesSlice.js';
 import { addChannel, removeChannel, renameChannel } from './slices/channelsSlice.js';
-// import getToast from './toast/toast.js';
 
 const RunApp = () => {
-  // const { t } = useTranslation();
   const rollbarConfig = {
     accessToken: process.env.REACT_APP_ROLLBAR_ACCESS_TOKEN,
     captureUncaught: true,

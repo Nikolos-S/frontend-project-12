@@ -4,7 +4,6 @@ import {
   Modal,
   FormGroup,
   FormControl,
-  Alert,
   FloatingLabel,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
@@ -73,10 +72,11 @@ const Rename = (props) => {
                 data-testid="input-body"
                 name="name"
                 placeholder={t('modals.placeholder')}
+                isInvalid={formik.touched.name}
               />
+              <FormControl.Feedback type="invalid">{formik.errors.name}</FormControl.Feedback>
             </FloatingLabel>
           </FormGroup>
-          <Alert show={!!formik.errors.name} variant="danger">{formik.errors.name}</Alert>
           <div className="d-flex justify-content-end mt-2">
             <button type="button" onClick={onHide} className="me-2 btn btn-secondary">{t('modals.cancel')}</button>
             <button type="submit" disabled={isBlock} className="btn btn-primary">{t('modals.rename')}</button>

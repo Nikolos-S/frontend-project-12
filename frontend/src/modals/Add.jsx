@@ -4,7 +4,6 @@ import {
   Modal,
   FormGroup,
   FormControl,
-  Alert,
   FloatingLabel,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +15,10 @@ import getToast from '../toast/toast.js';
 
 const Add = (props) => {
   const { t } = useTranslation();
+  // const dispatch = useDispatch();
+
   const { channels } = useSelector(channelsSelector);
+  // const { currentChannelId } = useSelector(channelsSelector);
   const { onHide } = props;
   const { submit } = useSocket();
 
@@ -44,6 +46,7 @@ const Add = (props) => {
     onSubmit: (value) => {
       setBlock(true);
       submit('newChannel', value, callback);
+      // dispatch(setChannel(currentChannelId));
     },
   });
 
@@ -70,10 +73,11 @@ const Add = (props) => {
                 data-testid="input-body"
                 name="name"
                 placeholder={t('modals.placeholder')}
+                isInvalid={formik.touched.name}
               />
+              <FormControl.Feedback type="invalid">{formik.errors.name}</FormControl.Feedback>
             </FloatingLabel>
           </FormGroup>
-          <Alert show={!!formik.errors.name} variant="danger">{formik.errors.name}</Alert>
           <div className="d-flex justify-content-end mt-2">
             <button type="button" onClick={onHide} className="me-2 btn btn-secondary">{t('modals.cancel')}</button>
             <button type="submit" disabled={isBlock} className="btn btn-primary">{t('modals.add')}</button>

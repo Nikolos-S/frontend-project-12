@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Button from 'react-bootstrap/esm/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -14,12 +14,10 @@ const Header = () => {
     i18n.changeLanguage(lang);
   };
 
-  const location = useLocation();
-  const href = location.pathname === '/' ? '/' : '/login';
   return (
     <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
       <div className="container">
-        <Link className="navbar-brand" to={href}>Hexlet Chat</Link>
+        <Link className="navbar-brand" to="/">Hexlet Chat</Link>
         <div className="d-flex">
           {localStorage.getItem('userId') && <Button type="button" onClick={logOut} className="btn btn-primary">{t('nav.logout')}</Button>}
           <DropdownButton title={t('nav.lng')}>

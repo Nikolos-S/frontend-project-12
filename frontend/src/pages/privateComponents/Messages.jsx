@@ -11,6 +11,9 @@ const Messages = () => {
   const { messages } = useSelector(messagesSelector);
   const { channels, currentChannelId } = useSelector(channelsSelector);
 
+  useEffect(() => {
+
+  }, [currentChannelId]);
   const curentMessages = messages
     .filter((message) => message.channelId === currentChannelId);
   const curentChannel = channels.find((channel) => channel.id === currentChannelId);
@@ -32,7 +35,7 @@ const Messages = () => {
       const xH = chatWindow.scrollHeight;
       chatWindow.scrollTo(0, xH);
     }
-  }, [messages, isAutoScroll]);
+  }); // , [messages, isAutoScroll] - с этим при переключении на канал скрол вверху
 
   return (
     <div className="col p-0 h-100">

@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useSocket } from '../hooks/index.jsx';
-import { channelsSelector, setChannel } from '../slices/channelsSlice.js';
 import getToast from '../toast/toast.js';
 
 const Remove = (props) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const { currentChannelId } = useSelector(channelsSelector);
 
   const { modalInfo, onHide } = props;
   const { submit } = useSocket();
@@ -25,9 +21,6 @@ const Remove = (props) => {
   const onClick = () => {
     setBlock(true);
     submit('removeChannel', { id: modalInfo.item }, callback);
-    if (currentChannelId === modalInfo.item) {
-      dispatch(setChannel({ id: 1 }));
-    }
   };
 
   return (

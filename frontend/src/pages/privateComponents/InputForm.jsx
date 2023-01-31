@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -11,10 +11,12 @@ const InputForm = ({ prop }) => {
   const [value, setValue] = useState('');
   const [readyStatus, setReadyStatus] = useState(false);
 
+  const inputRef = useRef();
   useEffect(() => {
     const newReadyStatus = value === '';
     setReadyStatus(newReadyStatus);
-  }, [value]);
+    inputRef.current.focus();
+  }, [value, prop]);
 
   const handleChange = (e) => {
     setValue(e.target.value);
@@ -46,6 +48,7 @@ const InputForm = ({ prop }) => {
             autoFocus
             onChange={handleChange}
             value={value}
+            ref={inputRef}
           />
           <Button type="submit" disabled={readyStatus} variant="outline-primary">
             <img src="./submitChat.png" width="20" height="20" alt="Войти" />

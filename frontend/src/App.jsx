@@ -1,5 +1,4 @@
-/* eslint-disable react/jsx-no-constructed-context-values */
-import React, { useState } from 'react';
+import React from 'react';
 import {
   BrowserRouter,
   Routes,
@@ -12,58 +11,59 @@ import ErrorPage from './pages/ErrorPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import PrivatePage from './pages/PrivatePage.jsx';
 import SignupPage from './pages/SignupPage.jsx';
-import { AuthContext } from './context/index.js';
 import { useAuth } from './hooks/index.jsx';
+import AuthProvider from './AuthProvider.jsx';
 
-const AuthProvider = ({ children }) => {
-  const [loggedId, setLoggedId] = useState(null);
-  const logIn = () => setLoggedId(true);
-  const logOut = () => {
-    localStorage.clear();
-    setLoggedId(false);
-  };
-
-  return (
-    <AuthContext.Provider
-      value={{
-        loggedId,
-        logIn,
-        logOut,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
-};
-
-const PrivateRoute = ({ children }) => {
+const PrivateRoute = ({ children, loginPath }) => {
   const { loggedId } = useAuth();
-  return loggedId || localStorage.getItem('userId') ? children : <Navigate to="/login" />;
+  return loggedId || localStorage.getItem('userId') ? children : <Navigate to={loginPath} />;
 // state={{ from: location }} - при необходимости задавать динамический путь после входа
 };
 
-const App = () => (
-  <AuthProvider>
-    <BrowserRouter>
-      <div className="d-flex flex-column h-100">
-        <Header />
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route
-            path="/"
-            element={(
-              <PrivateRoute>
-                <PrivatePage />
-              </PrivateRoute>
+const SetterRoute = ({ children }) => {
+  const { loggedId } = useAuth();
+  return loggedId || localStorage.getItem('userId') ? <Navigate to="/" /> : children;
+};
+
+const App = () => {
+  const loginPath = '/login';
+  return (
+    <AuthProvider>
+      <BrowserRouter>
+        <div className="d-flex flex-column h-100">
+          <Header />
+          <Routes>
+            <Route
+              path={loginPath}
+              element={(
+                <SetterRoute>
+                  <LoginPage />
+                </SetterRoute>
+              )}
+            />
+            <Route
+              path="/"
+              element={(
+                <PrivateRoute loginPath={loginPath}>
+                  <PrivatePage />
+                </PrivateRoute>
             )}
-          />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="*" element={<ErrorPage />} />
-        </Routes>
-      </div>
-      <ToastContainer />
-    </BrowserRouter>
-  </AuthProvider>
-);
+            />
+            <Route
+              path="/signup"
+              element={(
+                <SetterRoute>
+                  <SignupPage />
+                </SetterRoute>
+              )}
+            />
+            <Route path="*" element={<ErrorPage />} />
+          </Routes>
+        </div>
+        <ToastContainer />
+      </BrowserRouter>
+    </AuthProvider>
+  );
+};
 
 export default App;
