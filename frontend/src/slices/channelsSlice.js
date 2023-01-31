@@ -8,9 +8,9 @@ const channelsSlice = createSlice({
   reducers: {
     addChannel(state, { payload }) {
       state.channels.push(payload);
-      state.currentChannelId = payload.id;
     },
     setChannel(state, { payload }) {
+      console.log(payload);
       state.currentChannelId = payload.id;
     },
     removeChannel(state, { payload }) {

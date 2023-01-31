@@ -12,7 +12,12 @@ import App from './App.jsx';
 import store from './slices/index.js';
 import { SocketContext } from './context/index.js';
 import { addMessage } from './slices/messagesSlice.js';
-import { addChannel, removeChannel, renameChannel } from './slices/channelsSlice.js';
+import {
+  addChannel,
+  removeChannel,
+  renameChannel,
+  setChannel,
+} from './slices/channelsSlice.js';
 
 const RunApp = () => {
   const rollbarConfig = {
@@ -46,6 +51,8 @@ const RunApp = () => {
   const submit = (action, payload, callback) => {
     socket.emit(action, payload, (response) => {
       if (response.status) {
+        const newIdChannel = { id: response.data.id };
+        store.dispatch(setChannel(newIdChannel));
         callback();
       }
     });

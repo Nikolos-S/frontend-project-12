@@ -15,10 +15,8 @@ import getToast from '../toast/toast.js';
 
 const Add = (props) => {
   const { t } = useTranslation();
-  // const dispatch = useDispatch();
 
   const { channels } = useSelector(channelsSelector);
-  // const { currentChannelId } = useSelector(channelsSelector);
   const { onHide } = props;
   const { submit } = useSocket();
 
@@ -46,7 +44,6 @@ const Add = (props) => {
     onSubmit: (value) => {
       setBlock(true);
       submit('newChannel', value, callback);
-      // dispatch(setChannel(currentChannelId));
     },
   });
 
