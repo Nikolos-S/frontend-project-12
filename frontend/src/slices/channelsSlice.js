@@ -10,7 +10,6 @@ const channelsSlice = createSlice({
       state.channels.push(payload);
     },
     setChannel(state, { payload }) {
-      console.log(payload);
       state.currentChannelId = payload.id;
     },
     removeChannel(state, { payload }) {

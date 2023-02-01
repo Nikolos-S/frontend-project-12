@@ -35,10 +35,11 @@ const RunApp = () => {
   socket.on('newMessage', (payload) => {
     store.dispatch(addMessage(payload));
   });
-
+  /*
   socket.on('newChannel', (payload) => {
     store.dispatch(addChannel(payload));
   });
+  */
 
   socket.on('removeChannel', (payload) => {
     store.dispatch(removeChannel(payload));
@@ -48,11 +49,37 @@ const RunApp = () => {
     store.dispatch(renameChannel(payload));
   });
 
-  const submit = (action, payload, callback) => {
-    socket.emit(action, payload, (response) => {
+  const handleSubmitMessage = (payload, callback) => {
+    socket.emit('newMessage', payload, (response) => {
+      if (response.status) {
+        callback();
+      }
+    });
+  };
+
+  const handleSubmitChannell = (payload, callback) => {
+    socket.emit('newChannel', payload, (response) => {
       if (response.status) {
         const newIdChannel = { id: response.data.id };
         store.dispatch(setChannel(newIdChannel));
+        console.log(response);
+        store.dispatch(addChannel(response.data));
+        callback();
+      }
+    });
+  };
+
+  const handleRemoveChannel = (payload, callback) => {
+    socket.emit('removeChannel', payload, (response) => {
+      if (response.status) {
+        callback();
+      }
+    });
+  };
+
+  const handleRenameChannel = (payload, callback) => {
+    socket.emit('renameChannel', payload, (response) => {
+      if (response.status) {
         callback();
       }
     });
@@ -64,7 +91,13 @@ const RunApp = () => {
       <ErrorProvider config={rollbarConfig}>
         <ErrorBoundary>
           <I18nextProvider i18n={i18n}>
-            <SocketContext.Provider value={{ submit }}>
+            <SocketContext.Provider value={{
+              handleSubmitMessage,
+              handleSubmitChannell,
+              handleRemoveChannel,
+              handleRenameChannel,
+            }}
+            >
               <App />
             </SocketContext.Provider>
           </I18nextProvider>

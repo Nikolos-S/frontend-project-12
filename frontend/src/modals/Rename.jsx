@@ -8,17 +8,16 @@ import {
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
-import { useSelector, useDispatch } from 'react-redux';
-import { channelsSelector, setChannel } from '../slices/channelsSlice.js';
+import { useSelector } from 'react-redux';
+import { channelsSelector } from '../slices/channelsSlice.js';
 import { useSocket } from '../hooks/index.jsx';
 import getToast from '../toast/toast.js';
 
 const Rename = (props) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const { channels, currentChannelId } = useSelector(channelsSelector);
+  const { channels } = useSelector(channelsSelector);
   const { modalInfo, onHide } = props;
-  const { submit } = useSocket();
+  const { handleRenameChannel } = useSocket();
 
   const getChannels = channels.reduce((acc, { name }) => [...acc, name], []);
 
@@ -26,7 +25,7 @@ const Rename = (props) => {
     name: yup.string()
       .min(3, t('err.limitName'))
       .max(20, t('err.limitName'))
-      .required('поле обязательно')
+      .required(t('err.required'))
       .notOneOf([getChannels], t('err.notOneOf')),
   });
 
@@ -42,10 +41,7 @@ const Rename = (props) => {
     validationSchema: schema,
     onSubmit: (value) => {
       setBlock(true);
-      submit('renameChannel', { id: modalInfo.item, name: value.name }, callback);
-      if (currentChannelId === modalInfo.id) {
-        dispatch(setChannel({ id: modalInfo.item }));
-      }
+      handleRenameChannel({ id: modalInfo.item, name: value.name }, callback);
     },
   });
 

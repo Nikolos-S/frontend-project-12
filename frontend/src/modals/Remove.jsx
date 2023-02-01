@@ -8,7 +8,7 @@ const Remove = (props) => {
   const { t } = useTranslation();
 
   const { modalInfo, onHide } = props;
-  const { submit } = useSocket();
+  const { handleRemoveChannel } = useSocket();
 
   const [isBlock, setBlock] = useState(false);
 
@@ -20,7 +20,7 @@ const Remove = (props) => {
 
   const onClick = () => {
     setBlock(true);
-    submit('removeChannel', { id: modalInfo.item }, callback);
+    handleRemoveChannel({ id: modalInfo.item }, callback);
   };
 
   return (

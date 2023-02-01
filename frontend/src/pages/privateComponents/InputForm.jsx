@@ -7,7 +7,7 @@ import { useSocket } from '../../hooks/index.jsx';
 
 const InputForm = ({ prop }) => {
   const { t } = useTranslation();
-  const { submit } = useSocket();
+  const { handleSubmitMessage } = useSocket();
   const [value, setValue] = useState('');
   const [readyStatus, setReadyStatus] = useState(false);
 
@@ -35,7 +35,7 @@ const InputForm = ({ prop }) => {
 
     const currentName = JSON.parse(localStorage.getItem('userId')).username;
     const newMessage = { body: value, channelId: prop, username: currentName };
-    submit('newMessage', newMessage, callback);
+    handleSubmitMessage(newMessage, callback);
   };
 
   return (
