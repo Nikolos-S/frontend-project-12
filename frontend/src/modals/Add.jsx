@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
 import {
   Modal,
@@ -18,6 +18,7 @@ const Add = (props) => {
 
   const { channels } = useSelector(channelsSelector);
   const { onHide } = props;
+
   const { handleSubmitChannell } = useSocket();
 
   const getChannels = channels.reduce((acc, { name }) => [...acc, name], []);
@@ -30,11 +31,8 @@ const Add = (props) => {
       .notOneOf([getChannels], t('err.notOneOf')),
   });
 
-  const [isBlock, setBlock] = useState(false);
-
   const callback = () => {
     getToast(t('toast.add'), 'success');
-    setBlock(false);
     onHide();
   };
 
@@ -42,7 +40,6 @@ const Add = (props) => {
     initialValues: { name: '' },
     validationSchema: schema,
     onSubmit: (value) => {
-      setBlock(true);
       handleSubmitChannell(value, callback);
     },
   });
@@ -70,14 +67,14 @@ const Add = (props) => {
                 data-testid="input-body"
                 name="name"
                 placeholder={t('modals.placeholder')}
-                isInvalid={formik.touched.name}
+                isInvalid={formik.touched.name && formik.errors.name}
               />
               <FormControl.Feedback type="invalid">{formik.errors.name}</FormControl.Feedback>
             </FloatingLabel>
           </FormGroup>
           <div className="d-flex justify-content-end mt-2">
             <button type="button" onClick={onHide} className="me-2 btn btn-secondary">{t('modals.cancel')}</button>
-            <button type="submit" disabled={isBlock} className="btn btn-primary">{t('modals.add')}</button>
+            <button type="submit" disabled={formik.isSubmitting} className="btn btn-primary">{t('modals.add')}</button>
           </div>
         </form>
       </Modal.Body>

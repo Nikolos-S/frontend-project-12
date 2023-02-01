@@ -17,7 +17,8 @@ export default {
     },
     chat: {
       channels: 'Channels',
-      enterAmessage: 'enter a message...',
+      enterAmessage: 'enter a message',
+      newMessage: 'Новое сообщение',
       send: 'send',
       quantityMessage: {
         key_one: 'message',
@@ -55,6 +56,9 @@ export default {
       rename: 'Channel successfully renamed!',
       remove: 'The channel has been successfully deleted!',
       error: 'Connection error!',
+    },
+    errorPage: {
+      imgAlt: 'Страница не найдена',
     },
   },
 };

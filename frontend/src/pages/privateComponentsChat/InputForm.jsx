@@ -44,7 +44,7 @@ const InputForm = ({ prop }) => {
         <InputGroup>
           <Form.Control
             placeholder={t('chat.enterAmessage')}
-            aria-label="Новое сообщение"
+            aria-label={t('chat.newMessage')}
             autoFocus
             onChange={handleChange}
             value={value}

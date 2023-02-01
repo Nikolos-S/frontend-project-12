@@ -39,7 +39,7 @@ const SignupPage = () => {
         try {
           const response = await axios.post('/api/v1/signup', { username: values.username, password: values.password });
           localStorage.setItem('userId', JSON.stringify(response.data));
-          logIn(true);
+          logIn(response.data);
           navigate('/');
         } catch (err) {
           inputRef.current.select();

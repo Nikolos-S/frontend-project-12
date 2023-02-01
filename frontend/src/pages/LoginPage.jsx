@@ -37,7 +37,7 @@ const LoginPage = () => {
         try {
           const response = await axios.post('/api/v1/login', values);
           localStorage.setItem('userId', JSON.stringify(response.data));
-          logIn(true);
+          logIn(response.data);
           navigate('/');
         } catch (err) {
           inputRef.current.select();

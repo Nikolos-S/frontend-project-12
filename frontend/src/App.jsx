@@ -9,20 +9,20 @@ import { ToastContainer } from 'react-toastify';
 import Header from './pages/Nav.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
-import PrivatePage from './pages/PrivatePage.jsx';
+import PrivatePAgeChat from './pages/PrivatePAgeChat.jsx';
 import SignupPage from './pages/SignupPage.jsx';
 import { useAuth } from './hooks/index.jsx';
 import AuthProvider from './AuthProvider.jsx';
 
 const PrivateRoute = ({ children, loginPath }) => {
   const { loggedId } = useAuth();
-  return loggedId || localStorage.getItem('userId') ? children : <Navigate to={loginPath} />;
+  return loggedId ? children : <Navigate to={loginPath} />;
 // state={{ from: location }} - при необходимости задавать динамический путь после входа
 };
 
 const SetterRoute = ({ children }) => {
   const { loggedId } = useAuth();
-  return loggedId || localStorage.getItem('userId') ? <Navigate to="/" /> : children;
+  return loggedId ? <Navigate to="/" /> : children;
 };
 
 const App = () => {
@@ -45,7 +45,7 @@ const App = () => {
               path="/"
               element={(
                 <PrivateRoute loginPath={loginPath}>
-                  <PrivatePage />
+                  <PrivatePAgeChat />
                 </PrivateRoute>
             )}
             />

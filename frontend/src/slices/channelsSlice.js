@@ -7,6 +7,9 @@ const channelsSlice = createSlice({
   initialState: { channels: [], currentChannelId: '' },
   reducers: {
     addChannel(state, { payload }) {
+      if (state.channels.some((channel) => channel.id === payload.id)) {
+        return;
+      }
       state.channels.push(payload);
     },
     setChannel(state, { payload }) {

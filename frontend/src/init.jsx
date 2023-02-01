@@ -35,11 +35,10 @@ const RunApp = () => {
   socket.on('newMessage', (payload) => {
     store.dispatch(addMessage(payload));
   });
-  /*
+
   socket.on('newChannel', (payload) => {
     store.dispatch(addChannel(payload));
   });
-  */
 
   socket.on('removeChannel', (payload) => {
     store.dispatch(removeChannel(payload));
@@ -62,7 +61,6 @@ const RunApp = () => {
       if (response.status) {
         const newIdChannel = { id: response.data.id };
         store.dispatch(setChannel(newIdChannel));
-        console.log(response);
         store.dispatch(addChannel(response.data));
         callback();
       }

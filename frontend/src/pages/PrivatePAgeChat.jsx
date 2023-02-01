@@ -2,32 +2,26 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { channelsSelector } from '../slices/channelsSlice.js';
-import Channel from './privateComponents/Channel.jsx';
-import Messages from './privateComponents/Messages.jsx';
+import Channel from './privateComponentsChat/Channel.jsx';
+import Messages from './privateComponentsChat/Messages.jsx';
 import fetchData from '../slices/fetchData.js';
 import getModal from '../modals/index.js';
+import { useAuth } from '../hooks';
 
-const renderModal = (modalInfo, hideModal) => {
-  if (!modalInfo.type) {
-    return null;
-  }
-
-  const Component = getModal(modalInfo.type);
-  return <Component modalInfo={modalInfo} onHide={hideModal} />;
-};
-
-const PrivatePAge = () => {
+const PrivatePAgeChat = () => {
   const dispatch = useDispatch();
   const { channels, currentChannelId } = useSelector(channelsSelector);
   const { t } = useTranslation();
+  const { loggedId } = useAuth();
 
   useEffect(() => {
-    dispatch(fetchData());
+    dispatch(fetchData(loggedId));
   }, [dispatch]);
 
   const [modalInfo, setModalInfo] = useState({ type: null, item: null });
   const hideModal = () => setModalInfo({ type: null, item: null });
   const showModal = (type, item = null) => setModalInfo({ type, item });
+  const Component = getModal(modalInfo.type);
 
   return (
     <div className="container h-100 my-4 overflow-hidden rounded shadow">
@@ -44,7 +38,7 @@ const PrivatePAge = () => {
               && <Channel key={channel.id} channel={channel} curentId={currentChannelId} showModal={showModal} />
             ))}
           </ul>
-          {renderModal(modalInfo, hideModal)}
+          {modalInfo.type && <Component modalInfo={modalInfo} onHide={hideModal} />}
         </div>
         <Messages />
       </div>
@@ -52,4 +46,4 @@ const PrivatePAge = () => {
   );
 };
 
-export default PrivatePAge;
+export default PrivatePAgeChat;

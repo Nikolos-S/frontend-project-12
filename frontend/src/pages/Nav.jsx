@@ -7,7 +7,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import { useAuth } from '../hooks';
 
 const Header = () => {
-  const { logOut } = useAuth();
+  const { logOut, loggedId } = useAuth();
   const { t, i18n } = useTranslation();
 
   const changeLanguage = (lang) => {
@@ -19,7 +19,7 @@ const Header = () => {
       <div className="container">
         <Link className="navbar-brand" to="/">Hexlet Chat</Link>
         <div className="d-flex">
-          {localStorage.getItem('userId') && <Button type="button" onClick={logOut} className="btn btn-primary">{t('nav.logout')}</Button>}
+          {loggedId && <Button type="button" onClick={logOut} className="btn btn-primary">{t('nav.logout')}</Button>}
           <DropdownButton title={t('nav.lng')}>
             <Dropdown.Item onClick={() => changeLanguage('ru')}>RU</Dropdown.Item>
             <Dropdown.Item onClick={() => changeLanguage('en')}>EN</Dropdown.Item>

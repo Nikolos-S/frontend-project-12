@@ -18,6 +18,7 @@ export default {
     chat: {
       channels: 'Каналы',
       enterAmessage: 'Введите сообщение',
+      newMessage: 'Новое сообщение',
       send: 'Отправить',
       quantityMessage: {
         key_zero: 'сообщений',
