@@ -10,7 +10,7 @@ import filter from 'leo-profanity';
 import i18n from './locales/i18n';
 import App from './App.jsx';
 import store from './slices/index.js';
-import { SocketContext } from './context/index.js';
+import { SocketContext } from './context/index.jsx';
 import { addMessage } from './slices/messagesSlice.js';
 import {
   addChannel,

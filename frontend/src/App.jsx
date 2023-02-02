@@ -6,12 +6,12 @@ import {
   Navigate,
 } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import Header from './pages/Nav.jsx';
-import ErrorPage from './pages/ErrorPage.jsx';
-import LoginPage from './pages/LoginPage.jsx';
-import PrivatePAgeChat from './pages/PrivatePAgeChat.jsx';
-import SignupPage from './pages/SignupPage.jsx';
-import { useAuth } from './hooks/index.jsx';
+import Header from './common-components/Nav.jsx';
+import ErrorPage from './pages/errorPage/ErrorPage.jsx';
+import LoginPage from './pages/loginPage/LoginPage.jsx';
+import PrivatePAgeChat from './pages/chatPage/ChatPage.jsx';
+import SignupPage from './pages/signupPage/SignupPage.jsx';
+import { useAuth } from './context/index.jsx';
 import AuthProvider from './AuthProvider.jsx';
 
 const PrivateRoute = ({ children, loginPath }) => {

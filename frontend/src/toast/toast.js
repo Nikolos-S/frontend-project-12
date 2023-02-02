@@ -7,7 +7,6 @@ const getToast = (text, type) => toast[type](text, {
   closeOnClick: true,
   pauseOnHover: true,
   draggable: true,
-  progress: undefined,
   theme: 'light',
 });
 

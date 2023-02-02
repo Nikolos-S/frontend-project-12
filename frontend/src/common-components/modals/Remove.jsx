@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Modal, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { modalsSelector, activeModal } from '../slices/modalSlice.js';
-import { useSocket } from '../hooks/index.jsx';
-import getToast from '../toast/toast.js';
+import { modalsSelector, activeModal } from '../../slices/modalSlice.js';
+import { useSocket } from '../../context/index.jsx';
+import getToast from '../../toast/toast.js';
 
 const Remove = () => {
   const { t } = useTranslation();

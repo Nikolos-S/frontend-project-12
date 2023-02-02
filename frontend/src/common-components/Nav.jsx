@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Button from 'react-bootstrap/esm/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
-import { useAuth } from '../hooks';
+import { useAuth } from '../context/index.jsx';
 
 const Header = () => {
   const { logOut, loggedId } = useAuth();

@@ -27,6 +27,7 @@ export default {
         key_few: 'сообщения',
         key_many: 'сообщений',
       },
+      visuallyHidden: 'Управление каналом',
     },
     modals: {
       add: 'Добавить',

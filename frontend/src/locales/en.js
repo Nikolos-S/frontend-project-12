@@ -24,6 +24,7 @@ export default {
         key_one: 'message',
         key_other: 'messages',
       },
+      visuallyHidden: 'Управление каналом',
     },
     modals: {
       add: 'Add',

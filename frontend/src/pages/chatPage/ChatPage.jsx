@@ -2,14 +2,14 @@ import React, { useEffect } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { channelsSelector } from '../slices/channelsSlice.js';
-import { downloadStatusSelector } from '../slices/downloadStatusSlice.js';
-import { modalsSelector, activeModal } from '../slices/modalSlice.js';
-import Channel from './privateComponentsChat/Channel.jsx';
-import Messages from './privateComponentsChat/Messages.jsx';
-import fetchData from '../slices/fetchData.js';
-import getModal from '../modals/index.js';
-import { useAuth } from '../hooks';
+import { channelsSelector } from '../../slices/channelsSlice.js';
+import { downloadStatusSelector } from '../../slices/downloadStatusSlice.js';
+import { modalsSelector, activeModal } from '../../slices/modalSlice.js';
+import Channel from './components/Channel.jsx';
+import Messages from './components/Messages.jsx';
+import fetchData from '../../slices/fetchData.js';
+import getModal from '../../common-components/modals/index.js';
+import { useAuth } from '../../context/index.jsx';
 
 const PrivatePAgeChat = () => {
   const dispatch = useDispatch();

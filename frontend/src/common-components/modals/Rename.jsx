@@ -9,10 +9,10 @@ import {
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
-import { modalsSelector, activeModal } from '../slices/modalSlice.js';
-import { channelsSelector } from '../slices/channelsSlice.js';
-import { useSocket } from '../hooks/index.jsx';
-import getToast from '../toast/toast.js';
+import { modalsSelector, activeModal } from '../../slices/modalSlice.js';
+import { channelsSelector } from '../../slices/channelsSlice.js';
+import { useSocket } from '../../context/index.jsx';
+import getToast from '../../toast/toast.js';
 
 const Rename = () => {
   const { t } = useTranslation();

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { messagesSelector } from '../../slices/messagesSlice';
-import { channelsSelector } from '../../slices/channelsSlice';
+import { messagesSelector } from '../../../slices/messagesSlice';
+import { channelsSelector } from '../../../slices/channelsSlice';
 import Message from './Message.jsx';
 import InputForm from './InputForm.jsx';
 

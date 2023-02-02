@@ -5,8 +5,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { useDispatch } from 'react-redux';
 import filter from 'leo-profanity';
 import { useTranslation } from 'react-i18next';
-import { setChannel } from '../../slices/channelsSlice.js';
-import { activeModal } from '../../slices/modalSlice.js';
+import { setChannel } from '../../../slices/channelsSlice.js';
+import { activeModal } from '../../../slices/modalSlice.js';
 
 const Channel = (props) => {
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ const Channel = (props) => {
         {channel.removable
         && (
           <Dropdown.Toggle className="br-0" split variant={activeElement} id={channel.id}>
-            <span className="visually-hidden">Управление каналом</span>
+            <span className="visually-hidden">{t('chat.visuallyHidden')}</span>
           </Dropdown.Toggle>
         )}
         <Dropdown.Menu>

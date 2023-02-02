@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { useTranslation } from 'react-i18next';
-import { useSocket } from '../../hooks/index.jsx';
+import { useSocket } from '../../../context/index.jsx';
 
 const InputForm = ({ prop }) => {
   const { t } = useTranslation();

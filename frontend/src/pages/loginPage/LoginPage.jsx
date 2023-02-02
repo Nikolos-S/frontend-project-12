@@ -3,16 +3,17 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Button, Form, FloatingLabel } from 'react-bootstrap';
 import { useNavigate, Link } from 'react-router-dom';
 import { Formik } from 'formik';
-import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '../hooks';
-import getToast from '../toast/toast';
+import * as yup from 'yup';
+import { useAuth } from '../../context/index.jsx';
+import getToast from '../../toast/toast';
+import routes from '../../routes.js';
 
-const SignupPage = () => {
+const LoginPage = () => {
   const { t } = useTranslation();
   const { logIn } = useAuth();
-  const [authFailed, setAuthFailed] = useState(false);
   const inputRef = useRef();
+  const [authFailed, setAuthFailed] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,9 +21,8 @@ const SignupPage = () => {
   }, []);
 
   const schema = yup.object().shape({
-    username: yup.string().min(3, t('err.limitName')).max(20, t('err.limitName')).required(t('err.required')),
-    password: yup.string().min(6, t('err.limitPass')).required(t('err.required')),
-    repeatPass: yup.string().oneOf([yup.ref('password')], t('err.oneOf')),
+    username: yup.string().typeError(t('err.str')),
+    password: yup.string().typeError(t('err.str')),
   });
 
   return (
@@ -30,14 +30,13 @@ const SignupPage = () => {
       initialValues={{
         username: '',
         password: '',
-        repeatPass: '',
       }}
       validateOnBlur
       validationSchema={schema}
       onSubmit={async (values, { setSubmitting }) => {
         setAuthFailed(false);
         try {
-          const response = await axios.post('/api/v1/signup', { username: values.username, password: values.password });
+          const response = await axios.post(routes.loginPath(), values);
           localStorage.setItem('userId', JSON.stringify(response.data));
           logIn(response.data);
           navigate('/');
@@ -48,7 +47,7 @@ const SignupPage = () => {
             console.log(err);
             getToast(t('toast.error'), 'error');
           }
-          if (err.isAxiosError && err.response.status === 409) {
+          if (err.isAxiosError && err.response.status === 401) {
             setAuthFailed(true);
           }
         }
@@ -69,21 +68,20 @@ const SignupPage = () => {
               <div className="card shadow-sm">
                 <div className="card-body row p-5">
                   <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
-                    <img src="./signupPage.jpg" className="rounded-circle" alt="Войти" />
+                    <img src="./loginForm.jpg" className="rounded-circle" alt="Войти" />
                   </div>
                   <Form onSubmit={handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
-                    <h1 className="text-center mb-4">{t('form.registration')}</h1>
+                    <h1 className="text-center mb-4">{t('form.enter')}</h1>
                     <fieldset disabled={isSubmitting}>
                       <Form.Group className="mb-3">
-                        <FloatingLabel controlId="username" label={t('form.regName')} className="mb-3">
+                        <FloatingLabel controlId="username" label={t('form.name')} className="mb-3">
                           <Form.Control
-                            type="text"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.username}
                             name="username"
+                            placeholder={t('form.name')}
                             autoComplete="off"
-                            placeholder={t('form.regName')}
                             isInvalid={(touched.username && errors.username) || authFailed}
                             required
                             ref={inputRef}
@@ -99,39 +97,23 @@ const SignupPage = () => {
                             onBlur={handleBlur}
                             value={values.password}
                             name="password"
-                            autoComplete="off"
                             placeholder={t('form.pass')}
+                            autoComplete="off"
                             isInvalid={(touched.password && errors.password) || authFailed}
                             required
                           />
-                          <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
+                          <Form.Control.Feedback type="invalid">{errors.password ? errors.password : t('err.invalid')}</Form.Control.Feedback>
                         </FloatingLabel>
                       </Form.Group>
-                      <Form.Group className="mb-3">
-                        <FloatingLabel controlId="repeatPass" label={t('form.repeatPass')} className="mb-3">
-                          <Form.Control
-                            type="password"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.repeatPass}
-                            name="repeatPass"
-                            autoComplete="off"
-                            placeholder={t('form.repeatPass')}
-                            isInvalid={(touched.repeatPass && errors.repeatPass) || authFailed}
-                            required
-                          />
-                          <Form.Control.Feedback type="invalid">{errors.repeatPass ? errors.repeatPass : t('err.alreadyExists')}</Form.Control.Feedback>
-                        </FloatingLabel>
-                      </Form.Group>
-                      <Button type="submit" className="w-100 wb-3" variant="outline-primary">{t('form.register')}</Button>
+                      <Button type="submit" className="w-100 wb-3" variant="outline-primary">{t('form.enter')}</Button>
                     </fieldset>
                   </Form>
                 </div>
                 <div className="card-footer p-4">
                   <div className="text-center">
                     <span>
-                      {t('form.noAcc')}
-                      <Link to="/">{t('form.enter')}</Link>
+                      {t('form.haveAcc')}
+                      <Link to="/signup">{t('form.registration')}</Link>
                     </span>
                   </div>
                 </div>
@@ -144,4 +126,4 @@ const SignupPage = () => {
   );
 };
 
-export default SignupPage;
+export default LoginPage;
