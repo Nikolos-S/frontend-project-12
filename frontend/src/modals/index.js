@@ -7,7 +7,6 @@ const modals = {
   removing: Remove,
   renaming: Rename,
 };
-
 const getModal = (modalName) => modals[modalName];
 
 export default getModal;

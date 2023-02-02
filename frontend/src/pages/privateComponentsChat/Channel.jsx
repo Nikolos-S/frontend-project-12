@@ -6,13 +6,19 @@ import { useDispatch } from 'react-redux';
 import filter from 'leo-profanity';
 import { useTranslation } from 'react-i18next';
 import { setChannel } from '../../slices/channelsSlice.js';
+import { activeModal } from '../../slices/modalSlice.js';
 
 const Channel = (props) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { channel, curentId, showModal } = props; // removable
+  const { channel, curentId } = props; // removabl
+
   const handleSetChennel = () => {
     dispatch(setChannel({ id: channel.id }));
+  };
+
+  const showModal = (modalType, channelId) => {
+    dispatch(activeModal({ type: modalType, isShow: true, idChannel: channelId }));
   };
 
   const activeElement = channel.id === curentId ? 'secondary' : 'light';

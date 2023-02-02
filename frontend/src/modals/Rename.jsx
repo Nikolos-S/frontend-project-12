@@ -8,15 +8,22 @@ import {
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { modalsSelector, activeModal } from '../slices/modalSlice.js';
 import { channelsSelector } from '../slices/channelsSlice.js';
 import { useSocket } from '../hooks/index.jsx';
 import getToast from '../toast/toast.js';
 
-const Rename = (props) => {
+const Rename = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const data = useSelector(modalsSelector);
   const { channels } = useSelector(channelsSelector);
-  const { modalInfo, onHide } = props;
+
+  const onHide = () => {
+    dispatch(activeModal({ type: null, isShow: false, idChannel: null }));
+  };
+
   const { handleRenameChannel } = useSocket();
 
   const getChannels = channels.reduce((acc, { name }) => [...acc, name], []);
@@ -37,7 +44,7 @@ const Rename = (props) => {
     initialValues: { name: '' },
     validationSchema: schema,
     onSubmit: (value) => {
-      handleRenameChannel({ id: modalInfo.item, name: value.name }, callback);
+      handleRenameChannel({ id: data.idChannel, name: value.name }, callback);
     },
   });
 
@@ -47,7 +54,7 @@ const Rename = (props) => {
   }, []);
 
   return (
-    <Modal show centered>
+    <Modal show={data.isShow} centered>
       <Modal.Header closeButton onHide={onHide}>
         <Modal.Title>{t('modals.renameChannel')}</Modal.Title>
       </Modal.Header>

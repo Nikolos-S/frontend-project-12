@@ -8,16 +8,22 @@ import {
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { channelsSelector } from '../slices/channelsSlice.js';
+import { modalsSelector, activeModal } from '../slices/modalSlice.js';
 import { useSocket } from '../hooks/index.jsx';
 import getToast from '../toast/toast.js';
 
-const Add = (props) => {
+const Add = () => {
   const { t } = useTranslation();
 
   const { channels } = useSelector(channelsSelector);
-  const { onHide } = props;
+  const data = useSelector(modalsSelector);
+  const dispatch = useDispatch();
+
+  const onHide = () => {
+    dispatch(activeModal({ type: null, isShow: false, idChannel: null }));
+  };
 
   const { handleSubmitChannell } = useSocket();
 
@@ -50,7 +56,7 @@ const Add = (props) => {
   }, []);
 
   return (
-    <Modal show centered>
+    <Modal show={data.isShow} centered>
       <Modal.Header closeButton onHide={onHide}>
         <Modal.Title>{t('modals.addChannel')}</Modal.Title>
       </Modal.Header>

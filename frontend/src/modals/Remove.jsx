@@ -1,13 +1,20 @@
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Modal, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { modalsSelector, activeModal } from '../slices/modalSlice.js';
 import { useSocket } from '../hooks/index.jsx';
 import getToast from '../toast/toast.js';
 
-const Remove = (props) => {
+const Remove = () => {
   const { t } = useTranslation();
+  const data = useSelector(modalsSelector);
+  const dispatch = useDispatch();
 
-  const { modalInfo, onHide } = props;
+  const onHide = () => {
+    dispatch(activeModal({ type: null, isShow: false, idChannel: null }));
+  };
+
   const { handleRemoveChannel } = useSocket();
 
   const [isBlock, setBlock] = useState(false);
@@ -20,11 +27,11 @@ const Remove = (props) => {
 
   const onClick = () => {
     setBlock(true);
-    handleRemoveChannel({ id: modalInfo.item }, callback);
+    handleRemoveChannel({ id: data.idChannel }, callback);
   };
 
   return (
-    <Modal show centered>
+    <Modal show={data.isShow} centered>
       <Modal.Header closeButton onHide={onHide}>
         <Modal.Title>{t('modals.deleteChannel')}</Modal.Title>
       </Modal.Header>
