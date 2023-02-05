@@ -30,10 +30,10 @@ const Rename = () => {
 
   const schema = yup.object().shape({
     name: yup.string()
-      .min(3, t('err.limitName'))
-      .max(20, t('err.limitName'))
-      .required(t('err.required'))
-      .notOneOf([getChannels], t('err.notOneOf')),
+      .min(3, 'limitName')
+      .max(20, 'limitName')
+      .required('required')
+      .notOneOf([getChannels], 'notOneOf'),
   });
 
   const callback = () => {
@@ -73,7 +73,7 @@ const Rename = () => {
                 placeholder={t('modals.placeholder')}
                 isInvalid={formik.touched.name && formik.errors.name}
               />
-              <FormControl.Feedback type="invalid">{formik.errors.name}</FormControl.Feedback>
+              <FormControl.Feedback type="invalid">{t(`err.${formik.errors.name}`)}</FormControl.Feedback>
             </FloatingLabel>
           </FormGroup>
           <div className="d-flex justify-content-end mt-2">

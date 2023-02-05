@@ -11,9 +11,6 @@ const Messages = () => {
   const { messages } = useSelector(messagesSelector);
   const { channels, currentChannelId } = useSelector(channelsSelector);
 
-  useEffect(() => {
-
-  }, [currentChannelId]);
   const curentMessages = messages
     .filter((message) => message.channelId === currentChannelId);
   const curentChannel = channels.find((channel) => channel.id === currentChannelId);
@@ -35,7 +32,7 @@ const Messages = () => {
       const xH = chatWindow.scrollHeight;
       chatWindow.scrollTo(0, xH);
     }
-  }); // , [messages, isAutoScroll] - с этим при переключении на канал скрол вверху
+  });
 
   return (
     <div className="col p-0 h-100">
@@ -45,7 +42,7 @@ const Messages = () => {
           <span className="text-muted">{`${curentMessages.length} ${t('chat.quantityMessage.key', { count: curentMessages.length })}`}</span>
         </div>
         <div id="messages-box" className="chat-messages overflow-auto px-5" onScroll={scrollHandler}>
-          {curentMessages && curentMessages.map(({ id, body, username }) => (
+          {curentMessages.map(({ id, body, username }) => (
             <Message key={id} props={{ body, username }} />
           ))}
         </div>

@@ -7,6 +7,9 @@ const modals = {
   removing: Remove,
   renaming: Rename,
 };
-const getModal = (modalName) => modals[modalName];
+const Modal = ({ type }) => {
+  const Component = modals[type];
+  return <Component />;
+};
 
-export default getModal;
+export default Modal;

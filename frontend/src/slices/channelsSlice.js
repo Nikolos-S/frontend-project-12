@@ -25,7 +25,7 @@ const channelsSlice = createSlice({
     renameChannel(state, { payload }) {
       state.channels = state.channels.reduce((acc, channel) => {
         const curentName = channel.id === payload.id ? payload.name : channel.name;
-        return [...acc, { id: channel.id, name: curentName, removable: channel.removable }];
+        return [...acc, { ...channel, name: curentName }];
       }, []);
     },
   },

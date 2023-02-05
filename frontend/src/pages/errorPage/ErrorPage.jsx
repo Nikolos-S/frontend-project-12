@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import routes from '../../routes';
 
 const ErrorPage = () => {
   const { t } = useTranslation();
@@ -10,7 +11,7 @@ const ErrorPage = () => {
       <h1 className="h4 text-muted">{t('404.notFound')}</h1>
       <p className="text-muted">
         {t('404.goOver')}
-        <Link to="/">{t('404.mainPage')}</Link>
+        <Link to={routes.layout()}>{t('404.mainPage')}</Link>
       </p>
     </div>
   );

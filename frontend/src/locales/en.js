@@ -1,6 +1,9 @@
 export default {
   translation: {
     nav: {
+      name: 'Hexlet Chat',
+      ru: 'RU',
+      en: 'EN',
       lng: 'Lang',
       logout: 'logout',
     },

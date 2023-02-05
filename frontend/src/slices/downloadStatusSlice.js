@@ -5,6 +5,11 @@ import fetchData from './fetchData.js';
 const downloadStatusSlice = createSlice({
   name: 'downloadStatus',
   initialState: { loadingStatus: 'idle', error: null },
+  reducers: {
+    setStatus(state) {
+      state.loadingStatus = 'idle';
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchData.pending, (state) => {
@@ -22,5 +27,6 @@ const downloadStatusSlice = createSlice({
   },
 });
 
+export const { setStatus } = downloadStatusSlice.actions;
 export const downloadStatusSelector = ((state) => state.downloadStatus);
 export default downloadStatusSlice.reducer;
