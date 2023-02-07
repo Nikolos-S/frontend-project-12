@@ -26,4 +26,11 @@ const messagesSlice = createSlice({
 
 export const { addMessage, removeMessages } = messagesSlice.actions;
 export const messagesSelector = ((state) => state.messages);
+export const dataChatSelector = ((state) => {
+  const curentMessages = state.messages.messages
+    .filter((message) => message.channelId === state.channels.currentChannelId);
+  const curentChannel = state.channels.channels
+    .find((channel) => channel.id === state.channels.currentChannelId);
+  return { curentMessages, curentChannel };
+});
 export default messagesSlice.reducer;

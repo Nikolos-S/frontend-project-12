@@ -13,11 +13,14 @@ const ChatPAge = () => {
   const { loggedId, logOut } = useAuth();
 
   useEffect(() => {
-    dispatch(fetchData(loggedId));
-    if (loadingStatus === 'failed') {
-      logOut();
-      dispatch(setStatus());
+    try {
+      dispatch(fetchData(loggedId));
+    } catch (err) {
       console.log(error);
+      if (err.response.status === 401) {
+        logOut();
+        dispatch(setStatus());
+      }
     }
   }, [dispatch]);
 

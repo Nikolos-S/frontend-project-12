@@ -4,7 +4,7 @@ import fetchData from './fetchData.js';
 
 const channelsSlice = createSlice({
   name: 'channels',
-  initialState: { channels: [], currentChannelId: '' },
+  initialState: { channels: [], currentChannelId: 1 },
   reducers: {
     addChannel(state, { payload }) {
       if (state.channels.some((channel) => channel.id === payload.id)) {

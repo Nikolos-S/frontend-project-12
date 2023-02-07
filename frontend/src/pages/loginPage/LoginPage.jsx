@@ -45,6 +45,7 @@ const LoginPage = () => {
           getToast(t('toast.error'), 'error');
         }
         if (err.isAxiosError && err.response.status === 401) {
+          console.log(err);
           setAuthFailed(true);
         }
       }

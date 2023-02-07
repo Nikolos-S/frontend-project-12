@@ -1,56 +1,52 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useFormik } from 'formik';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { useTranslation } from 'react-i18next';
-import { useSocket } from '../../../context/index.jsx';
+import { useSelector } from 'react-redux';
+import { channelsSelector } from '../../../slices/channelsSlice.js';
+import { useSocket, useAuth } from '../../../context/index.jsx';
 
-const InputForm = ({ prop }) => {
+const InputForm = () => {
   const { t } = useTranslation();
+  const { currentChannelId } = useSelector(channelsSelector);
   const { handleSubmitMessage } = useSocket();
-  const [value, setValue] = useState('');
-  const [readyStatus, setReadyStatus] = useState(false);
+
+  const { loggedId } = useAuth();
 
   const inputRef = useRef();
   useEffect(() => {
-    const newReadyStatus = value === '';
-    setReadyStatus(newReadyStatus);
     inputRef.current.focus();
-  }, [value, prop]);
+  }, []);
 
-  const handleChange = (e) => {
-    setValue(e.target.value);
-  };
-
-  const callback = () => {
-    setValue('');
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setReadyStatus(true);
-    if (!value) {
-      return;
-    }
-
-    const currentName = JSON.parse(localStorage.getItem('userId')).username;
-    const newMessage = { body: value, channelId: prop, username: currentName };
-    handleSubmitMessage(newMessage, callback);
-  };
+  const formik = useFormik({
+    initialValues: { text: '' },
+    onSubmit: ({ text }) => {
+      const callback = () => {
+        formik.resetForm();
+      };
+      const newMessage = { body: text, channelId: currentChannelId, username: loggedId.username };
+      handleSubmitMessage(newMessage, callback);
+    },
+  });
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={formik.handleSubmit}>
       <Form.Group>
         <InputGroup>
           <Form.Control
+            required
             placeholder={t('chat.enterAmessage')}
             aria-label={t('chat.newMessage')}
             autoFocus
-            onChange={handleChange}
-            value={value}
+            onChange={formik.handleChange}
+            value={formik.values.text}
+            name="text"
             ref={inputRef}
+            disabled={formik.isSubmitting}
           />
-          <Button type="submit" disabled={readyStatus} variant="outline-primary">
+          <Button type="submit" disabled={formik.isSubmitting || formik.values.text === ''} variant="outline-primary">
             <img src="./submitChat.png" width="20" height="20" alt="Войти" />
             <span className="visually-hidden">{t('chat.send')}</span>
           </Button>

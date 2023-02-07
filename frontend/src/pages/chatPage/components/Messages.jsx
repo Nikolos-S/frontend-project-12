@@ -1,37 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { messagesSelector } from '../../../slices/messagesSlice';
-import { channelsSelector } from '../../../slices/channelsSlice';
+import { dataChatSelector } from '../../../slices/messagesSlice';
 import Message from './Message.jsx';
 import InputForm from './InputForm.jsx';
 
 const Messages = () => {
   const { t } = useTranslation();
-  const { messages } = useSelector(messagesSelector);
-  const { channels, currentChannelId } = useSelector(channelsSelector);
-
-  const curentMessages = messages
-    .filter((message) => message.channelId === currentChannelId);
-  const curentChannel = channels.find((channel) => channel.id === currentChannelId);
-
-  const [isAutoScroll, setIsAutoScroll] = useState(true);
-
-  const scrollHandler = (e) => {
-    const element = e.target;
-    if (Math.abs(element.scrollHeight - element.offsetHeight - element.scrollTop) > 50) {
-      setIsAutoScroll(false);
-    } else {
-      setIsAutoScroll(true);
-    }
-  };
+  const { curentMessages, curentChannel } = useSelector(dataChatSelector);
 
   useEffect(() => {
-    if (isAutoScroll) {
-      const chatWindow = document.getElementById('messages-box');
-      const xH = chatWindow.scrollHeight;
-      chatWindow.scrollTo(0, xH);
-    }
+    const chatWindow = document.getElementById('messages-box');
+    const xH = chatWindow.scrollHeight;
+    chatWindow.scrollTo(0, xH);
   });
 
   return (
@@ -41,13 +22,13 @@ const Messages = () => {
           <p className="m-0"><b>{`# ${curentChannel && curentChannel.name}`}</b></p>
           <span className="text-muted">{`${curentMessages.length} ${t('chat.quantityMessage.key', { count: curentMessages.length })}`}</span>
         </div>
-        <div id="messages-box" className="chat-messages overflow-auto px-5" onScroll={scrollHandler}>
+        <div id="messages-box" className="chat-messages overflow-auto px-5">
           {curentMessages.map(({ id, body, username }) => (
-            <Message key={id} props={{ body, username }} />
+            <Message key={id} body={body} username={username} />
           ))}
         </div>
         <div className="mt-auto px-5 py-3">
-          <InputForm prop={currentChannelId} />
+          <InputForm />
         </div>
       </div>
     </div>
