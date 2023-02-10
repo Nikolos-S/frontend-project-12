@@ -11,13 +11,8 @@ import i18n from './locales/i18n';
 import App from './App.jsx';
 import store from './slices/index.js';
 import { SocketContext } from './context/index.jsx';
-import { addMessage } from './slices/messagesSlice.js';
-import {
-  addChannel,
-  removeChannel,
-  renameChannel,
-  setChannel,
-} from './slices/channelsSlice.js';
+import { addChannel, setChannel } from './slices/channelsSlice.js';
+import buildChatAPI from './buildChatAPI';
 
 const RunApp = () => {
   const rollbarConfig = {
@@ -31,22 +26,7 @@ const RunApp = () => {
   filter.add(filter.getDictionary('ru'));
 
   const socket = io();
-
-  socket.on('newMessage', (payload) => {
-    store.dispatch(addMessage(payload));
-  });
-
-  socket.on('newChannel', (payload) => {
-    store.dispatch(addChannel(payload));
-  });
-
-  socket.on('removeChannel', (payload) => {
-    store.dispatch(removeChannel(payload));
-  });
-
-  socket.on('renameChannel', (payload) => {
-    store.dispatch(renameChannel(payload));
-  });
+  buildChatAPI(socket);
 
   const handleSubmitMessage = (payload, callback) => {
     socket.emit('newMessage', payload, (response) => {

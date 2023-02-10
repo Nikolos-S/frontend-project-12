@@ -1,34 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Button from 'react-bootstrap/esm/Button';
 import { dataChatSelector } from '../../../slices/messagesSlice';
 import Message from './Message.jsx';
 import InputForm from './InputForm.jsx';
-import { useAuth } from '../../../context';
+import useScrollToLastMessage from './useScrollToLastMessage';
 
 const Messages = () => {
-  const { loggedId } = useAuth();
   const { t } = useTranslation();
   const { curentMessages, curentChannel } = useSelector(dataChatSelector);
   const [isAutoScroll, setIsAutoScroll] = useState(false);
-  const [scrolledChannel, setScrolledChannel] = useState({});
   const messagesEndRef = useRef(null);
 
-  useEffect(() => {
-    const element = messagesEndRef.current;
-    const username = curentMessages.length !== 0
-      ? curentMessages[curentMessages.length - 1].username : null;
-    if (loggedId.username === username
-        || Math.abs(element.scrollHeight - element.offsetHeight - element.scrollTop) < 50
-        || scrolledChannel.id !== curentChannel.id) {
-      element.scrollTo(0, element.scrollHeight);
-      setScrolledChannel(curentChannel);
-      setIsAutoScroll(false);
-    } else {
-      setIsAutoScroll(true);
-    }
-  }, [curentMessages, curentChannel]);
+  useScrollToLastMessage(messagesEndRef, setIsAutoScroll, curentMessages, curentChannel);
 
   const setAvto = () => {
     setIsAutoScroll(false);
