@@ -4,26 +4,27 @@ import {
   Routes,
   Route,
   Navigate,
+  Outlet,
 } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import Layout from './common-components/Layout.jsx';
 import ErrorPage from './pages/errorPage/ErrorPage.jsx';
 import LoginPage from './pages/loginPage/LoginPage.jsx';
-import PrivatePAgeChat from './pages/chatPage/ChatPage.jsx';
+import ChatPage from './pages/chatPage/ChatPage.jsx';
 import SignupPage from './pages/signupPage/SignupPage.jsx';
 import { useAuth } from './context/index.jsx';
 import AuthProvider from './AuthProvider.jsx';
 import routes from './routes.js';
 
-const PrivateRoute = ({ children }) => {
+const PrivateRoute = () => {
   const { loggedId } = useAuth();
-  return loggedId ? children : <Navigate to={routes.login()} />;
+  return loggedId ? <Outlet /> : <Navigate to={routes.login()} />;
 // state={{ from: location }} - при необходимости задавать динамический путь после входа
 };
 
-const SetterRoute = ({ children }) => {
+const SetterRoute = () => {
   const { loggedId } = useAuth();
-  return loggedId ? <Navigate to={routes.layout()} /> : children;
+  return loggedId ? <Navigate to={routes.layout()} /> : <Outlet />;
 };
 
 const App = () => (
@@ -31,30 +32,15 @@ const App = () => (
     <BrowserRouter>
       <Routes>
         <Route path={routes.layout()} element={<Layout />}>
-          <Route
-            path={routes.login()}
-            element={(
-              <SetterRoute>
-                <LoginPage />
-              </SetterRoute>
-            )}
-          />
-          <Route
-            path={routes.layout()}
-            element={(
-              <PrivateRoute>
-                <PrivatePAgeChat />
-              </PrivateRoute>
-          )}
-          />
-          <Route
-            path={routes.signup()}
-            element={(
-              <SetterRoute>
-                <SignupPage />
-              </SetterRoute>
-            )}
-          />
+          <Route path={routes.login()} element={<SetterRoute />}>
+            <Route path={routes.login()} element={<LoginPage />} />
+          </Route>
+          <Route path={routes.layout()} element={<PrivateRoute />}>
+            <Route path={routes.layout()} element={<ChatPage />} />
+          </Route>
+          <Route path={routes.signup()} element={<SetterRoute />}>
+            <Route path={routes.signup()} element={<SignupPage />} />
+          </Route>
           <Route path="*" element={<ErrorPage />} />
         </Route>
       </Routes>

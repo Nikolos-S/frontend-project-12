@@ -43,8 +43,8 @@ const Rename = () => {
   const formik = useFormik({
     initialValues: { name: '' },
     validationSchema: schema,
-    onSubmit: (value) => {
-      handleRenameChannel({ id: data.idChannel, name: value.name }, callback);
+    onSubmit: async (value) => {
+      await handleRenameChannel({ id: data.idChannel, name: value.name }, callback);
     },
   });
 

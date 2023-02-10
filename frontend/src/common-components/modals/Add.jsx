@@ -45,8 +45,8 @@ const Add = () => {
   const formik = useFormik({
     initialValues: { name: '' },
     validationSchema: schema,
-    onSubmit: (value) => {
-      handleSubmitChannell(value, callback);
+    onSubmit: async (value) => {
+      await handleSubmitChannell(value, callback);
     },
   });
 

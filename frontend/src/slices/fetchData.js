@@ -5,7 +5,7 @@ import routes from '../routes';
 const fetchData = createAsyncThunk(
   'fetchData',
   async (data) => {
-    const response = await axios.get(routes.dataPath(), { headers: data ? { Authorization: `Bearer ${data.token}` } : {} });
+    const response = await axios.get(routes.dataPath(), data);
     return response.data;
   },
 );

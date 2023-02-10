@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useFormik } from 'formik';
 import { Modal, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { modalsSelector, activeModal } from '../../slices/modalSlice.js';
@@ -17,18 +18,15 @@ const Remove = () => {
 
   const { handleRemoveChannel } = useSocket();
 
-  const [isBlock, setBlock] = useState(false);
-
   const callback = () => {
     getToast(t('toast.remove'), 'success');
-    setBlock(false);
     onHide();
   };
 
-  const onClick = () => {
-    setBlock(true);
-    handleRemoveChannel({ id: data.idChannel }, callback);
+  const onClick = async () => {
+    await handleRemoveChannel({ id: data.idChannel }, callback);
   };
+  const formik = useFormik({});
 
   return (
     <Modal show={data.isShow} centered>
@@ -39,7 +37,7 @@ const Remove = () => {
       <Modal.Body>{t('modals.sure')}</Modal.Body>
       <Modal.Footer>
         <Button onClick={onHide} type="button" variant="secondary">{t('modals.cancel')}</Button>
-        <Button disabled={isBlock} onClick={onClick} variant="danger">{t('modals.remove')}</Button>
+        <Button disabled={formik.isSubmitting} onClick={onClick} variant="danger">{t('modals.remove')}</Button>
       </Modal.Footer>
     </Modal>
   );

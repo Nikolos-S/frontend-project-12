@@ -15,11 +15,6 @@ const InputForm = () => {
 
   const { loggedId } = useAuth();
 
-  const inputRef = useRef();
-  useEffect(() => {
-    inputRef.current.focus();
-  }, []);
-
   const formik = useFormik({
     initialValues: { text: '' },
     onSubmit: ({ text }) => {
@@ -30,6 +25,11 @@ const InputForm = () => {
       handleSubmitMessage(newMessage, callback);
     },
   });
+
+  const inputRef = useRef();
+  useEffect(() => {
+    inputRef.current.focus();
+  }, [formik.isSubmitting, currentChannelId]);
 
   return (
     <Form onSubmit={formik.handleSubmit}>
