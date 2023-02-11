@@ -29,7 +29,7 @@ const Messages = () => {
               <p className="m-0"><b>{`# ${curentChannel && curentChannel.name}`}</b></p>
               <span className="text-muted">{`${curentMessages.length} ${t('chat.quantityMessage.key', { count: curentMessages.length })}`}</span>
             </div>
-            {isAutoScroll && <Button onClick={setAvto} className="d-flex" variant="secondary">Новые сообщения</Button>}
+            {isAutoScroll && <Button onClick={setAvto} className="d-flex" variant="secondary">{t('chat.newMessage')}</Button>}
           </div>
         </div>
         <div ref={messagesEndRef} id="messages-box" className="chat-messages overflow-auto px-5">

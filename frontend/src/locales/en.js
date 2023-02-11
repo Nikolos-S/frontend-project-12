@@ -21,7 +21,7 @@ export default {
     chat: {
       channels: 'Channels',
       enterAmessage: 'enter a message',
-      newMessage: 'Новое сообщение',
+      newMessage: 'new messages',
       send: 'send',
       quantityMessage: {
         key_one: 'message',
