@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import { AuthContext } from './context/index.jsx';
-import { setStatus } from './slices/downloadStatusSlice';
+import { AuthContext } from './index.jsx';
+import { setStatus } from '../slices/downloadStatusSlice';
 
 const AuthProvider = ({ children }) => {
   const dispatch = useDispatch();

@@ -13,7 +13,6 @@ import LoginPage from './pages/loginPage/LoginPage.jsx';
 import ChatPage from './pages/chatPage/ChatPage.jsx';
 import SignupPage from './pages/signupPage/SignupPage.jsx';
 import { useAuth } from './context/index.jsx';
-import AuthProvider from './AuthProvider.jsx';
 import routes from './routes.js';
 
 const PrivateRoute = () => {
@@ -28,25 +27,23 @@ const SetterRoute = () => {
 };
 
 const App = () => (
-  <AuthProvider>
-    <BrowserRouter>
-      <Routes>
-        <Route path={routes.layout()} element={<Layout />}>
-          <Route path={routes.login()} element={<SetterRoute />}>
-            <Route path={routes.login()} element={<LoginPage />} />
-          </Route>
-          <Route path={routes.layout()} element={<PrivateRoute />}>
-            <Route path={routes.layout()} element={<ChatPage />} />
-          </Route>
-          <Route path={routes.signup()} element={<SetterRoute />}>
-            <Route path={routes.signup()} element={<SignupPage />} />
-          </Route>
-          <Route path="*" element={<ErrorPage />} />
+  <BrowserRouter>
+    <Routes>
+      <Route path={routes.layout()} element={<Layout />}>
+        <Route path={routes.login()} element={<SetterRoute />}>
+          <Route path={routes.login()} element={<LoginPage />} />
         </Route>
-      </Routes>
-      <ToastContainer />
-    </BrowserRouter>
-  </AuthProvider>
+        <Route path={routes.layout()} element={<PrivateRoute />}>
+          <Route path={routes.layout()} element={<ChatPage />} />
+        </Route>
+        <Route path={routes.signup()} element={<SetterRoute />}>
+          <Route path={routes.signup()} element={<SignupPage />} />
+        </Route>
+        <Route path="*" element={<ErrorPage />} />
+      </Route>
+    </Routes>
+    <ToastContainer />
+  </BrowserRouter>
 );
 
 export default App;
