@@ -8,6 +8,7 @@ const downloadStatusSlice = createSlice({
   reducers: {
     setStatus(state) {
       state.loadingStatus = 'idle';
+      state.error = null;
     },
   },
   extraReducers: (builder) => {
@@ -17,7 +18,7 @@ const downloadStatusSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchData.fulfilled, (state) => {
-        state.loadingStatus = 'idle';
+        state.loadingStatus = 'sent';
         state.error = null;
       })
       .addCase(fetchData.rejected, (state, action) => {
