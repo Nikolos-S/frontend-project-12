@@ -28,7 +28,9 @@ const InputForm = () => {
 
   const inputRef = useRef();
   useEffect(() => {
-    inputRef.current.focus();
+    if (!formik.isSubmitting) {
+      inputRef.current.focus();
+    }
   }, [formik.isSubmitting, currentChannelId]);
 
   return (
