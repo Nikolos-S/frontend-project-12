@@ -1,3 +1,6 @@
+import { useSelector } from 'react-redux';
+import { Modal } from 'react-bootstrap';
+import { modalsSelector } from '../../slices/modalSlice.js';
 import Add from './Add';
 import Remove from './Remove';
 import Rename from './Rename';
@@ -9,9 +12,14 @@ const modals = {
   renaming: Rename,
   restart: Restart,
 };
-const Modal = ({ type }) => {
+const Modals = ({ type }) => {
+  const data = useSelector(modalsSelector);
   const Component = modals[type];
-  return <Component />;
+  return (
+    <Modal show={data.isShow} centered>
+      <Component />
+    </Modal>
+  );
 };
 
-export default Modal;
+export default Modals;

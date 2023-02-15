@@ -1,19 +1,20 @@
-import React, { useState, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Button from 'react-bootstrap/esm/Button';
-import { dataChatSelector } from '../../../slices/messagesSlice';
 import Message from './Message.jsx';
 import InputForm from './InputForm.jsx';
 import useScrollToLastMessage from './useScrollToLastMessage';
 
 const Messages = () => {
   const { t } = useTranslation();
-  const { curentMessages, curentChannel } = useSelector(dataChatSelector);
-  const [isAutoScroll, setIsAutoScroll] = useState(false);
-  const messagesEndRef = useRef(null);
 
-  useScrollToLastMessage(messagesEndRef, setIsAutoScroll, curentMessages, curentChannel);
+  const {
+    isAutoScroll,
+    messagesEndRef,
+    setIsAutoScroll,
+    curentMessages,
+    curentChannel,
+  } = useScrollToLastMessage();
 
   const setAvto = () => {
     setIsAutoScroll(false);

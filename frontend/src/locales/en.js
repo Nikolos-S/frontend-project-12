@@ -54,15 +54,15 @@ export default {
       notFound: 'Page not found',
       goOver: 'But you can go ',
       mainPage: 'to the main page.',
+      modalHeading: 'Something went wrong',
+      update: 'Update?',
+      ok: 'Update!',
     },
     toast: {
       add: 'The channel has been successfully created!',
       rename: 'Channel successfully renamed!',
       remove: 'The channel has been successfully deleted!',
       error: 'Connection error!',
-    },
-    errorPage: {
-      imgAlt: 'Страница не найдена',
     },
   },
 };

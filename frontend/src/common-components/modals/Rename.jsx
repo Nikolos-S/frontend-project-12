@@ -54,7 +54,7 @@ const Rename = () => {
   }, []);
 
   return (
-    <Modal show={data.isShow} centered>
+    <>
       <Modal.Header closeButton onHide={onHide}>
         <Modal.Title>{t('modals.renameChannel')}</Modal.Title>
       </Modal.Header>
@@ -82,7 +82,7 @@ const Rename = () => {
           </div>
         </form>
       </Modal.Body>
-    </Modal>
+    </>
   );
 };
 

@@ -1,6 +1,15 @@
 /* eslint-disable no-param-reassign */
-import { createSlice } from '@reduxjs/toolkit';
-import fetchData from './fetchData.js';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+import routes from '../routes';
+
+export const fetchData = createAsyncThunk(
+  'fetchData',
+  async (data) => {
+    const response = await axios.get(routes.dataPath(), data);
+    return response.data;
+  },
+);
 
 const downloadStatusSlice = createSlice({
   name: 'downloadStatus',

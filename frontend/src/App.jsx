@@ -18,7 +18,6 @@ import routes from './routes.js';
 const PrivateRoute = () => {
   const { loggedId } = useAuth();
   return loggedId ? <Outlet /> : <Navigate to={routes.login()} />;
-// state={{ from: location }} - при необходимости задавать динамический путь после входа
 };
 
 const SetterRoute = () => {

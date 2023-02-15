@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
-import fetchData from './fetchData.js';
+import { fetchData } from './downloadStatusSlice.js';
 
 const channelsSlice = createSlice({
   name: 'channels',

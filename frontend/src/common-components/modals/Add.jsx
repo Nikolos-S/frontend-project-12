@@ -9,8 +9,8 @@ import {
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
-import { channelsSelector } from '../../slices/channelsSlice.js';
-import { modalsSelector, activeModal } from '../../slices/modalSlice.js';
+import { channelsSelector, setChannel } from '../../slices/channelsSlice.js';
+import { activeModal } from '../../slices/modalSlice.js';
 import { useSocket } from '../../context/index.jsx';
 import getToast from '../../toast/toast.js';
 
@@ -18,7 +18,6 @@ const Add = () => {
   const { t } = useTranslation();
 
   const { channels } = useSelector(channelsSelector);
-  const data = useSelector(modalsSelector);
   const dispatch = useDispatch();
 
   const onHide = () => {
@@ -37,8 +36,10 @@ const Add = () => {
       .notOneOf([getChannels], 'notOneOf'),
   });
 
-  const callback = () => {
+  const callback = (curentId) => {
     getToast(t('toast.add'), 'success');
+    const newIdChannel = { id: curentId };
+    dispatch(setChannel(newIdChannel));
     onHide();
   };
 
@@ -56,7 +57,7 @@ const Add = () => {
   }, []);
 
   return (
-    <Modal show={data.isShow} centered>
+    <>
       <Modal.Header closeButton onHide={onHide}>
         <Modal.Title>{t('modals.addChannel')}</Modal.Title>
       </Modal.Header>
@@ -84,7 +85,7 @@ const Add = () => {
           </div>
         </form>
       </Modal.Body>
-    </Modal>
+    </>
   );
 };
 

@@ -4,7 +4,6 @@ import {
   addChannel,
   removeChannel,
   renameChannel,
-  setChannel,
 } from '../../slices/channelsSlice.js';
 
 const buildChatAPI = (socket) => {
@@ -34,10 +33,8 @@ const buildChatAPI = (socket) => {
   const handleSubmitChannell = (payload, callback) => {
     socket.emit('newChannel', payload, (response) => {
       if (response.status) {
-        const newIdChannel = { id: response.data.id };
-        store.dispatch(setChannel(newIdChannel));
         store.dispatch(addChannel(response.data));
-        callback();
+        callback(response.data.id);
       }
     });
   };

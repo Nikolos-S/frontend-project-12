@@ -48,7 +48,7 @@ const InputForm = () => {
             ref={inputRef}
             disabled={formik.isSubmitting}
           />
-          <Button type="submit" disabled={formik.isSubmitting || formik.values.text === ''} variant="outline-primary">
+          <Button type="submit" disabled={formik.isSubmitting || formik.values.text.trim() === ''} variant="outline-primary">
             <img src="./submitChat.png" width="20" height="20" alt="Войти" />
             <span className="visually-hidden">{t('chat.send')}</span>
           </Button>

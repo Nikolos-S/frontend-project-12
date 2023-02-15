@@ -29,7 +29,7 @@ const Remove = () => {
   const formik = useFormik({});
 
   return (
-    <Modal show={data.isShow} centered>
+    <>
       <Modal.Header closeButton onHide={onHide}>
         <Modal.Title>{t('modals.deleteChannel')}</Modal.Title>
       </Modal.Header>
@@ -39,7 +39,7 @@ const Remove = () => {
         <Button onClick={onHide} type="button" variant="secondary">{t('modals.cancel')}</Button>
         <Button disabled={formik.isSubmitting} onClick={onClick} variant="danger">{t('modals.remove')}</Button>
       </Modal.Footer>
-    </Modal>
+    </>
   );
 };
 

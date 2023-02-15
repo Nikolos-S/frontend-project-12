@@ -11,7 +11,7 @@ import { activeModal } from '../../../slices/modalSlice.js';
 const Channel = (props) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { channel, curentId } = props; // removabl
+  const { channel, curentId } = props;
 
   const handleSetChennel = () => {
     dispatch(setChannel({ id: channel.id }));

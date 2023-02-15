@@ -5,7 +5,7 @@ import { channelsSelector } from '../../../slices/channelsSlice.js';
 import { modalsSelector, activeModal } from '../../../slices/modalSlice.js';
 import Channel from './Channel.jsx';
 import Messages from './Messages.jsx';
-import Modal from '../../../common-components/modals/index.jsx';
+import Modals from '../../../common-components/modals/index.jsx';
 
 const Chat = () => {
   const { t } = useTranslation();
@@ -31,7 +31,7 @@ const Chat = () => {
               <Channel key={channel.id} channel={channel} curentId={currentChannelId} />
             ))}
           </ul>
-          {type && <Modal type={type} />}
+          {type && <Modals type={type} />}
         </div>
         <Messages />
       </div>

@@ -14,7 +14,14 @@ const AuthProvider = ({ children }) => {
     setLoggedId(null);
   };
 
-  const value = useMemo(() => ({ loggedId, logIn, logOut }), [loggedId]);
+  const getHeader = () => ({ headers: loggedId ? { Authorization: `Bearer ${loggedId.token}` } : {} });
+
+  const value = useMemo(() => ({
+    loggedId,
+    logIn,
+    logOut,
+    getHeader,
+  }), [loggedId]);
 
   return (
     <AuthContext.Provider value={value}>
