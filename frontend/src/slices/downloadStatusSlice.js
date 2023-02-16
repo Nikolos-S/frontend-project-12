@@ -27,7 +27,7 @@ const downloadStatusSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchData.fulfilled, (state) => {
-        state.loadingStatus = 'sent';
+        state.loadingStatus = 'loaded';
         state.error = null;
       })
       .addCase(fetchData.rejected, (state, action) => {

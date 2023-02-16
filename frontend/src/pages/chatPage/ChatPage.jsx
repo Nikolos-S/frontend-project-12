@@ -22,16 +22,18 @@ const ChatPAge = () => {
 
   useEffect(() => {
     if (loadingStatus === 'failed') {
-      if (!error.code === 'ERR_BAD_REQUEST') {
+      console.log(error.code);
+      console.log(loadingStatus);
+      if (error.code === 'ERR_BAD_RESPONSE') {
         dispatch(activeModal({ type: 'restart', isShow: true, idChannel: null }));
       } else {
         getToast(t('toast.error'), 'error');
+        logOut();
       }
-      logOut();
     }
   }, [error, loadingStatus]);
 
-  return (loadingStatus !== 'sent' ? <LoadingComponent /> : <Chat />);
+  return (loadingStatus !== 'loaded' ? <LoadingComponent /> : <Chat />);
 };
 
 export default ChatPAge;
